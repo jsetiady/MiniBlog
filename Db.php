@@ -13,7 +13,7 @@ class Db {
 
         // Check connection
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            die("Connection failed blog: " . $conn->connect_error);
         } 
 
         echo "Connected successfully";
