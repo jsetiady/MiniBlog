@@ -24,10 +24,25 @@ class UserHandler{
 		// $conn->close();
 	}
 
-	/*function createUsers() {
+	function createUsers() {
 		$db = new Db();
-		$conn = $db->getConnection();
-	}*/
+		if(isset($_POST["username"], $_POST["name"], $_POST["password"])){			
+			$username = $_POST["username"];
+			$name = $_POST["name"];
+			$password = base64_encode($_POST["password"]);
+			$role = "user";
+			
+			$query = "INSERT INTO user (username, name, password, role) VALUES('".$username."','".$name."','".$password."','".$role."')";
+			$result = $db->executeQuery($query);
+
+			if(!empty($result))
+				$statusMessage = "200 OK";
+			else {
+			    $statusMessage = "404 Not Found";
+				$resultset = array('error' => 'Cant create user!');
+			}
+		}
+	}
 
 }
 

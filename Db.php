@@ -13,7 +13,7 @@ class Db {
             $this->conn = $conn;            
         }
     }
-    // get the database connection
+
     public function connectDB() {       
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         if ($conn->connect_error) {
@@ -23,14 +23,27 @@ class Db {
         return $conn;
     }
 
-    function executeSelectQuery($query) {
-        $result = $this->conn->query($query);
+    function executeSelectQuery($query){
+        $result = mysqli_query($this->conn, $query);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc())
                 $resultset[] = $row;
             return $resultset;
         } 
+    }
+
+    function executeQuery($query) {
+        $result = mysqli_query($this->conn, $query);
+        if (!$result) {
+            //check for duplicate entry
+            if($this->conn->errno == 1062)
+                return false;
+            else
+                trigger_error (mysqli_error($this->conn),E_USER_NOTICE);            
+        }       
+        $affectedRows = mysqli_affected_rows($this->conn);
+        return $affectedRows;        
     }
  
 }
