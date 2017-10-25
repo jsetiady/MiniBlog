@@ -5,7 +5,7 @@ class Db {
     private $username = "baaafb453f5db3";
     private $password = "d2e42ccf";
     private $dbname = "rumaji";
-    public $conn;
+
 
     // get the database connection
     public function getConnection() {
@@ -13,7 +13,7 @@ class Db {
 
         // Check connection
         if ($conn->connect_error) {
-            die("Connection failed blog: " . $conn->connect_error);
+            die("Connection failed: " . $conn->connect_error);
         } 
 
         echo "Connected successfully";
