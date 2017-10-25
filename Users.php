@@ -37,8 +37,8 @@ class UserHandler{
 		header($this->httpVersion. " ". $statusMessage);		
 		header("Content-Type: application/json; charset=UTF-8");
 				
-		$response = json_encode($users_arr);
-		echo $response;
+		/*$response = json_encode($users_arr);
+		echo $response;*/
 	}
 }
 
