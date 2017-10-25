@@ -51,7 +51,7 @@ class UserHandler{
 
 		     $statusMessage = "200 OK";
 		} else {
-		    $statusMessage = "404 Not Found";
+		    $statusMessage = "400 Invalid Request";
 			$users_arr = array('error' => 'No users found!');
 		}
 		// check if more than 0 record found
