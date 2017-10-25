@@ -1,7 +1,7 @@
 <?php
 require_once("Db.php");
 
-class UserHandler extends Db{
+class UserHandler{
 
 	private $httpVersion = "HTTP/1.1";
 
@@ -30,7 +30,7 @@ class UserHandler extends Db{
 
 		     $statusMessage = "200 OK";
 		} else {
-		    $statusMessage = "400 Not Found";
+		    $statusMessage = "401 Not Found";
 			$users_arr = array('error' => 'No users found!');
 		}
 
