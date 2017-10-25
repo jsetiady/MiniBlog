@@ -14,7 +14,7 @@ class UserHandler{
 
 		// users array
 	    $users_arr = array();
-	    $users_arr["records"] = array();
+	    // $users_arr["records"] = array();
 
 
 		if ($result->num_rows > 0) {
@@ -25,7 +25,7 @@ class UserHandler{
 		            "username" => $row['username'],
 		            "name" => $row['name']
 		        );
-		        array_push($users_arr["records"], $users_item);
+		        array_push($users_arr, $users_item);
 		    }
 
 		     $statusMessage = "200 OK";
