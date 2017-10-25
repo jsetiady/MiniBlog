@@ -38,6 +38,11 @@ class UserHandler{
 		$sql = "SELECT * FROM users";
 		$result = $conn->query($sql);
 
+		// users array
+	    $users_arr = array();
+	    $users_arr["records"] = array();
+
+
 		if ($result->num_rows > 0) {
 		    // output data of each row
 		    while($row = $result->fetch_assoc()) {
@@ -51,7 +56,7 @@ class UserHandler{
 
 		     $statusMessage = "200 OK";
 		} else {
-		    $statusMessage = "400 Invalid Request";
+		    $statusMessage = "400 Not Found";
 			$users_arr = array('error' => 'No users found!');
 		}
 		// check if more than 0 record found
