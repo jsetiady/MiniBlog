@@ -20,12 +20,14 @@ class UserHandler{
 		if ($result->num_rows > 0) {
 		    // output data of each row
 		    while($row = $result->fetch_assoc()) {
-		    	extract($row);
-		        $users_item = array(
-		            "username" => $row['username'],
-		            "name" => $row['name']
-		        );
-		        array_push($users_arr, $users_item);
+		    	// extract($row);
+		     //    $users_item = array(
+		     //        "username" => $row['username'],
+		     //        "name" => $row['name']
+		     //    );
+		     //    array_push($users_arr, $users_item);
+		    	$resultset[] = $row;
+
 		    }
 
 		     $statusMessage = "200 OK";
@@ -37,10 +39,18 @@ class UserHandler{
 		header($this->httpVersion. " ". $statusMessage);		
 		header("Content-Type: application/json; charset=UTF-8");
 				
-		$response = json_encode($users_arr);
+		$response = json_encode($resultset);
+
+		// $response = json_encode($users_arr);
 		echo $response;
 		$conn->close();
 	}
+
+	function createUsers() {
+		$db = new Db();
+		$conn = $db->getConnection();
+	}
+
 }
 
 ?>
