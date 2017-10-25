@@ -17,7 +17,8 @@ class UserHandler{
 	    // output data of each row
 		    while($row = $result->fetch_assoc()) {
 		        echo "username: " . $row["username"]. " - name: " . $row["name"]. "<br>";
-	    }
+	    	}
+		}
 		// users array
 	    /*$users_arr = array();
 	    $users_arr["records"] = array();*/
@@ -45,6 +46,7 @@ class UserHandler{
 				
 		/*$response = json_encode($users_arr);
 		echo $response;*/
+		$conn->close();
 	}
 }
 
