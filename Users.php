@@ -12,6 +12,12 @@ class UserHandler{
 		$sql = "SELECT * FROM users";
 	    $result = $conn->query($sql);
 
+
+	    if ($result->num_rows > 0) {
+	    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+		        echo "username: " . $row["username"]. " - name: " . $row["name"]. "<br>";
+	    }
 		// users array
 	    /*$users_arr = array();
 	    $users_arr["records"] = array();*/
