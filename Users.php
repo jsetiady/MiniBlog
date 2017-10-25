@@ -1,11 +1,7 @@
 <?php
-
 require_once("Db.php");
 
-
-
-
-class UserHandler{
+class UserHandler extends Db{
 
 	private $httpVersion = "HTTP/1.1";
 
