@@ -13,8 +13,8 @@ class UserHandler{
 	    $result = $conn->query($sql);
 
 		// users array
-	    $users_arr = array();
-	    $users_arr["records"] = array();
+	    /*$users_arr = array();
+	    $users_arr["records"] = array();*/
 
 
 		if ($result->num_rows > 0) {
