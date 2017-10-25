@@ -1,7 +1,6 @@
 <?php
  
 class Db {
-
     private $servername = "ap-cdbr-azure-southeast-b.cloudapp.net";
     private $username = "baaafb453f5db3";
     private $password = "d2e42ccf";
@@ -24,7 +23,15 @@ class Db {
         return $conn;
     }
 
-    // function executeSelectQuery($query) {}
+    function executeSelectQuery($query) {
+        $result = $this->conn->query($query);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc())
+                $resultset[] = $row;
+            return $resultset;
+        } 
+    }
  
 }
  
