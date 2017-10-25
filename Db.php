@@ -2,6 +2,7 @@
  
 class Db {
 
+    public $conn;
     // get the database connection
     public function getConnection() {
          $servername = "ap-cdbr-azure-southeast-b.cloudapp.net";
