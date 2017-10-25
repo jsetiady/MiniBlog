@@ -1,6 +1,6 @@
 <?php
 
-include_once '../Db.php';
+include_once "Db.php";
 class Users {
  
     // database connection and table name
