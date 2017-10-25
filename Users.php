@@ -5,7 +5,7 @@ class UserHandler{
 	private $httpVersion = "HTTP/1.1";
 
 	function getUsers() {	
-		$query = "SELECT * FROM users";
+		$query = "SELECT 'username', 'name', 'role' FROM 'users'";
 		$db = new Db();
 	    $resultset = $db->executeSelectQuery($query);
 
@@ -27,7 +27,7 @@ class UserHandler{
 	function createUsers() {
 		$db = new Db();
 		$conn = $db->connectDB();
-		
+
 		if(isset($_POST["username"], $_POST["name"], $_POST["password"])){			
 			$username = mysqli_real_escape_string($conn,$_POST["username"]);
 			$name = mysqli_real_escape_string($conn,$_POST["name"]);
