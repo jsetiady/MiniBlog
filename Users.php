@@ -32,7 +32,7 @@ class UserHandler{
 			$password = base64_encode($_POST["password"]);
 			$role = "user";
 			
-			$query = "INSERT INTO user (username, name, password, role) VALUES('".$username."','".$name."','".$password."','".$role."')";
+			$query = "INSERT INTO users (username, name, password, role) VALUES('".$username."','".$name."','".$password."','".$role."')";
 			$result = $db->executeQuery($query);
 
 			if(!empty($result))

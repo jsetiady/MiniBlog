@@ -1,13 +1,14 @@
 <?php
 require_once("Users.php");
-		
-
-/*
-controls the RESTful services
-URL mapping
-*/
-
-	$userHandler = new UserHandler();
-	$userHandler->getUsers();
+	
+	if(isset($_POST["username"])){
+		$userHandler = new UserHandler();
+		$userHandler->createUsers();
+	}
+	else{
+		$userHandler = new UserHandler();
+		$userHandler->getUsers();
+	}
+	
 
 ?>
