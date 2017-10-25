@@ -26,9 +26,11 @@ class UserHandler{
 
 	function createUsers() {
 		$db = new Db();
+		$conn = $db->connectDB();
+		
 		if(isset($_POST["username"], $_POST["name"], $_POST["password"])){			
-			$username = $_POST["username"];
-			$name = $_POST["name"];
+			$username = mysqli_real_escape_string($conn,$_POST["username"]);
+			$name = mysqli_real_escape_string($conn,$_POST["name"]);
 			$password = base64_encode($_POST["password"]);
 			$role = "user";
 			
