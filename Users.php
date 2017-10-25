@@ -6,7 +6,8 @@ class UserHandler{
 	private $httpVersion = "HTTP/1.1";
 
 	function getUsers() {	
-
+		$db = new Db();
+		$conn = $db->connectDB();
 
 		$sql = "SELECT * FROM users";
 	    $result = $conn->query($sql);
@@ -31,10 +32,10 @@ class UserHandler{
 		$conn->close();
 	}
 
-	function createUsers() {
+	/*function createUsers() {
 		$db = new Db();
 		$conn = $db->getConnection();
-	}
+	}*/
 
 }
 
