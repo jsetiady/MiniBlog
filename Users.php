@@ -12,16 +12,9 @@ class UserHandler{
 		$sql = "SELECT * FROM users";
 	    $result = $conn->query($sql);
 
-
-	    if ($result->num_rows > 0) {
-	    // output data of each row
-		    while($row = $result->fetch_assoc()) {
-		        echo "username: " . $row["username"]. " - name: " . $row["name"]. "<br>";
-	    	}
-		}
 		// users array
-	    /*$users_arr = array();
-	    $users_arr["records"] = array();*/
+	    $users_arr = array();
+	    $users_arr["records"] = array();
 
 
 		if ($result->num_rows > 0) {
@@ -44,8 +37,8 @@ class UserHandler{
 		header($this->httpVersion. " ". $statusMessage);		
 		// header("Content-Type: application/json; charset=UTF-8");
 				
-		/*$response = json_encode($users_arr);
-		echo $response;*/
+		$response = json_encode($users_arr);
+		echo $response;
 		$conn->close();
 	}
 }
