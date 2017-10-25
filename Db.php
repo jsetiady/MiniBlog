@@ -6,15 +6,15 @@ class Db {
     private $username = "baaafb453f5db3";
     private $password = "d2e42ccf";
     private $dbname = "rumaji";
-    private $conn;
+    public $conn;
     // get the database connection
-    function getConnection() {       
-        $this->$conn = new mysqli($this->$servername, $this->$username, $this->$password, $this->$dbname);
-        if ($this->$conn->connect_error) {
-            die("Connection failed: " . $this->$conn->connect_error);
+    public function getConnection() {       
+        $conn = new mysqli($this->$servername, $this->$username, $this->$password, $this->$dbname);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         } 
 
-        return $this->$conn;
+        return $conn;
     }
 
     // function executeSelectQuery($query) {}
