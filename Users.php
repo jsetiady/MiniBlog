@@ -6,8 +6,7 @@ class UserHandler{
 	private $httpVersion = "HTTP/1.1";
 
 	function getUsers() {	
-		$db = new Db();
-		$conn = $db->getConnection();
+
 
 		$sql = "SELECT * FROM users";
 	    $result = $conn->query($sql);
