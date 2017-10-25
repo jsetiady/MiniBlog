@@ -2,8 +2,7 @@
 require_once("Users.php");
 	
 	if(isset($_POST["username"])){
-		$userHandler = new UserHandler();
-		$userHandler->createUsers();
+		echo "berhasil cuk";
 	}
 	else{
 		$userHandler = new UserHandler();
