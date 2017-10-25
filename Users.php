@@ -58,7 +58,7 @@ class UserHandler{
 
 		$requestContentType = $_SERVER['HTTP_ACCEPT'];
 		header($this->httpVersion. " ". $statusMessage);		
-		header("Content-Type:". $contentType);
+		header("Content-Type:". $requestContentType);
 				
 		if(strpos($requestContentType,'application/json') !== false){
 			$response = json_encode($users_arr);

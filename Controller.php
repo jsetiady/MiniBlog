@@ -7,7 +7,7 @@ controls the RESTful services
 URL mapping
 */
 
-	$users = new UserHandler();
-	$users->getUsers();
+	$userHandler = new UserHandler();
+	$userHandler->getUsers();
 
 ?>
