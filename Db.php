@@ -10,14 +10,14 @@ class Db {
  
     // get the database connection
     public function getConnection() {
-        $this->conn = null;
- 
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
-        } catch (PDOException $exception) {
-            echo "Database connection error: " . $exception->getMessage();
-        }
+        $this->$conn->close();
+        $conn = new mysqli($servername, $username, $password, $db_name);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
+        echo "Connected successfully";
  
         return $this->conn;
     }
