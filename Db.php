@@ -19,7 +19,7 @@ class Db {
 
         echo "Connected successfully";
  
-        return $this->conn;
+        return $conn;
     }
  
 }
