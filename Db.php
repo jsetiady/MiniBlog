@@ -8,14 +8,20 @@ class Db {
     private $dbname = "rumaji";
     private $conn;
 
+    function __construct() {
+        $conn = $this->connectDB();
+        if(!empty($conn)) {
+            $this->conn = $conn;            
+        }
+    }
     // get the database connection
-    public function getConnection() {       
-        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+    public function connectDB() {       
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         } 
 
-        return $this->conn;
+        return $conn;
     }
 
     // function executeSelectQuery($query) {}
