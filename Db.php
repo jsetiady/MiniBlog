@@ -1,10 +1,10 @@
 <?php
  
 class Db {
-    private $servername = "ap-cdbr-azure-southeast-b.cloudapp.net";
-    private $username = "baaafb453f5db3";
-    private $password = "d2e42ccf";
-    private $dbname = "rumaji";
+     $servername = "ap-cdbr-azure-southeast-b.cloudapp.net";
+     $username = "baaafb453f5db3";
+     $password = "d2e42ccf";
+     $dbname = "rumaji";
 
 
     // get the database connection
