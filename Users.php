@@ -21,7 +21,7 @@ class UserHandler{
 				
 		$response = json_encode($resultset);
 		echo $response;
-		$conn->close();
+		// $conn->close();
 	}
 
 	/*function createUsers() {
