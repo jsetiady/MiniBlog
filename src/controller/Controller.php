@@ -10,9 +10,11 @@ class Controller {
 	
 	public function invoke($module)
 	{
+        $_SESSION['user'] = array('temp'); // Please remove when session already implemented
+        
         if(!isset($_SESSION['user']) && $module == "register") 
         {
-            include "src/view/register.php";
+            $this->showRegister();
         }
         else {
             
@@ -20,8 +22,25 @@ class Controller {
             {
                 $this->showLogin();
             }
+            
             else
             {
+                $role = "admin";
+                $role = "user";
+                
+                if ($role == "user") {
+                    
+                    switch ($module) {
+                        case "home": 
+                            $this->showUserDashboard();
+                            break;
+                    }
+                    
+                    
+                } else {
+                    
+                    $this->showAdminDashboard();
+                }
                 echo "check role and show user dashboard";
             }
         }
@@ -32,6 +51,18 @@ class Controller {
 	{
         include "src/view/login.php";
 	}
+    
+    //register page
+	public function showRegister($redirectVal = "false")
+	{
+        include "src/view/register.php";
+	}
+    
+    
+    // -- Blog Owner  --
+    public function showAdminDashboard() {
+        
+    }
     
 }
 ?>

@@ -35,8 +35,12 @@
               <span class="input-group-addon"><i class="fa fa-lock"></i></span>
               <input type="password" class="form-control" placeholder="Repeat password">
             </div>
-
-            <button type="button" class="btn btn-block btn-success">Create Account</button>
+              
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-block btn-success">Create Account</button>
+            </div>
+            
+            <a href="index.php"><button type="button" class="btn btn-block btn-primary">Wait a minute, I have an account!</button></a>
           </div>
           
         </div>
