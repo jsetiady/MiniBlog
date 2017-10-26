@@ -113,6 +113,86 @@ class PostModel {
         $stmt->close();
         return $return;
     }
+    
+    public function updatePost($data)
+    {
+        $mysqli = Connection::getCon();
+        
+        $strUpdate = "";
+        $fieldCount = 0;
+        $col = array();
+        
+        if( !empty($data['postTitle']) )
+        {
+            $strUpdate .= "post_title = ? ";
+            $fieldCount++;
+            array_push($col, $data['postTitle']);
+        }
+        
+        if( !empty($data['postDate']) )
+        {
+            if ($strUpdate!="")
+            {
+                $strUpdate .= ", ";
+            }
+            $strUpdate .= "post_date = ? ";
+            $fieldCount++;
+            array_push($col, $data['postDate']);
+        }
+                
+        if( !empty($data['postContent']) )
+        {
+            if ($strUpdate!="")
+            {
+                $strUpdate .= ", ";
+            }
+            $strUpdate .= "post_content = ? ";
+            $fieldCount++;
+            array_push($col, $data['postContent']);
+        }
+        
+        if ($strUpdate!="")
+        {
+            $strUpdate = "SET " . $strUpdate;
+        
+            $sql = "UPDATE post ". $strUpdate ." WHERE post_id = ? AND post_author = ?";
+
+            array_push($col, $data['postId']);
+            array_push($col, $data['postAuthor']);
+
+            if (!($stmt = $mysqli->prepare($sql))) {
+                echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+                $return = "Failed";
+            }
+
+            /* Prepared statement, stage 2: bind and execute */
+
+            switch(count($col))
+            {
+                case 3: $binding = $stmt->bind_param("sis", $col[0], $col[1], $col[2]); break;
+                case 4: $binding = $stmt->bind_param("ssis", $col[0], $col[1], $col[2], $col[3], $col[4]); break;
+                case 5: $binding = $stmt->bind_param("sssis", $col[0], $col[1], $col[2], $col[3], $col[4]); break;
+            }
+
+            if (!$binding) {
+                echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            if (!$stmt->execute()) {
+                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            } else {
+                $return = array(
+                    "affected_row" => $stmt->affected_rows
+                );
+            }
+
+            $stmt->close();
+        }
+        else {
+            $return = array("affected_row" => 0);
+        }
+        return $return;
+    }
 	
 }
 

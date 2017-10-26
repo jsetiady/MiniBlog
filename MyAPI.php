@@ -68,21 +68,62 @@ class MyAPI extends API
             else
             if ($action == "add") // ADD POST
             {
-                return array(
-                    'data' => 
-                        array(
-                            "message" => $this->PostModel->addNewPost(
-                                array(
-                                    "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"])
-                                ),
-                        ),
-                    'status' => 200
-                );
+                if( empty($_POST["postTitle"]) || empty($_POST["postAuthor"]) || empty($_POST["postAuthor"]) || empty($_POST["postAuthor"]))
+                {
+                    return array(
+                        'data' => array("message" => "Mandatory Parameter is Missing"),
+                        'status' => 404
+                    );
+                } else {
+                    return array(
+                        'data' => 
+                            array(
+                                "message" => $this->PostModel->addNewPost(
+                                    array(
+                                        "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"])
+                                    ),
+                            ),
+                        'status' => 200
+                    );
+                }
             }
             else
             if ($action == "update") // UPDATE POST
             {
-
+                if (empty ($_POST['postId']) || empty ($_POST['postAuthor'])) {
+                    return array(
+                        'data' => array("message" => "Mandatory Parameter is Missing"),
+                        'status' => 404
+                    );
+                } else {
+                    $data = array(
+                        "postId" => $_POST["postId"],
+                        "postAuthor" => $_POST["postAuthor"]
+                    );
+                    
+                    if( !empty($_POST['postTitle']))
+                    {
+                        $data["postTitle"] = $_POST['postTitle'];
+                    }
+                    
+                    if( !empty($_POST['postDate']))
+                    {
+                        $data["postDate"] = $_POST['postDate'];
+                    }
+                    
+                    if( !empty($_POST['postContent']))
+                    {
+                        $data["postContent"] = $_POST['postContent'];
+                    }
+                    
+                    return array(
+                        'data' => 
+                            array(
+                                "message" => $this->PostModel->updatePost($data)
+                            ),
+                        'status' => 200
+                    );
+                }
             }
             else
             if ($action == "delete") // DELETE POST
