@@ -1,14 +1,14 @@
 <?php
+include_once("util/Util.php");
 include_once("model/Post.php");
 
 class PostModel {
 	
 	public function getAllPosts() 
     {
-    	$allPost = array();
-
-    	$sql = "SELECT post_id, post_title, post_author, post_content, post_date from post";
-    	
+        $allPost = array();
+        // prepare and bind
+        $sql = "SELECT post_id, post_title, post_author, post_content, post_date FROM post";
     	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql))
@@ -17,6 +17,40 @@ class PostModel {
     	}
 
     	return $allPost;
+    }
+
+    public function getAllPostsByAuthor($author) {
+        $mysqli = Connection::getCon();
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+        }
+
+        if (!($stmt = $mysqli->prepare("SELECT post_id, post_title, post_author, post_content, post_date FROM post WHERE post_author = ? ORDER BY post_id ASC"))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+        }
+
+        if (!$stmt->bind_param("s", $author)) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmt->execute()) {
+             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!($res = $stmt->get_result())) {
+            echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        $results = $res->fetch_all();
+        $posts = array();
+        $util = new Util();
+        foreach ($results as $key => $res) {
+            $post = new Post($res[0], $res[1], $res[2], $res[3], $res[4]);
+            array_push($posts, $post);
+        }
+        $posts = $util->objectsToArray($posts);
+        return $posts;
+
     }
 	
 }
