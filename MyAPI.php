@@ -68,7 +68,7 @@ class MyAPI extends API
             else
             if ($action == "add") // ADD POST
             {
-                if( empty($_POST["postTitle"]) || empty($_POST["postAuthor"]) || empty($_POST["postAuthor"]) || empty($_POST["postAuthor"]))
+                if( empty($_POST["postTitle"]) || empty($_POST["postAuthor"]) || empty($_POST["postDate"]) || empty($_POST["postContent"]))
                 {
                     return array(
                         'data' => array("message" => "Mandatory Parameter is Missing"),
@@ -80,8 +80,9 @@ class MyAPI extends API
                             array(
                                 "message" => $this->PostModel->addNewPost(
                                     array(
-                                        "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"])
-                                    ),
+                                        "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"]
+                                    )
+                                ),
                             ),
                         'status' => 200
                     );
@@ -128,7 +129,25 @@ class MyAPI extends API
             else
             if ($action == "delete") // DELETE POST
             {
-
+                if( empty($_POST["postId"]) || empty($_POST["postAuthor"]))
+                {
+                    return array(
+                        'data' => array("message" => "Mandatory Parameter is Missing"),
+                        'status' => 404
+                    );
+                } else {
+                    return array(
+                        'data' => 
+                            array(
+                                "message" => $this->PostModel->deletePost(
+                                    array(
+                                        "postId" => $_POST["postId"], "postAuthor" => $_POST["postAuthor"]
+                                        )
+                                    )
+                            ),
+                        'status' => 200
+                    );
+                }
             }
         }
 

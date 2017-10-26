@@ -193,6 +193,34 @@ class PostModel {
         }
         return $return;
     }
+    
+    public function deletePost($data)
+    {
+        $mysqli = Connection::getCon();
+        
+        $sql = "DELETE FROM post WHERE post_id = ? AND post_author = ?";
+
+        if (!($stmt = $mysqli->prepare($sql))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            $return = "Failed";
+        }
+
+        /* Prepared statement, stage 2: bind and execute */
+        if (!$stmt->bind_param("is", $data['postId'], $data['postAuthor'])) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        } else {
+            $return = array(
+                "affected_row" => $stmt->affected_rows
+            );
+        }
+
+        $stmt->close();
+        return $return;
+    }
 	
 }
 
