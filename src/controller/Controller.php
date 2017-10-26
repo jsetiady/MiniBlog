@@ -25,11 +25,11 @@ class Controller {
             
             else
             {
+                
                 $role = "admin";
                 $role = "user";
                 
                 if ($role == "user") {
-                    
                     switch ($module) {
                         case "home": 
                             $this->showUserDashboard();
@@ -41,7 +41,6 @@ class Controller {
                     
                     $this->showAdminDashboard();
                 }
-                echo "check role and show user dashboard";
             }
         }
 	}
@@ -60,8 +59,10 @@ class Controller {
     
     
     // -- Blog Owner  --
-    public function showUserDashboard() {
-        
+    public function showUserDashboard() 
+    {
+        $data = 
+        include "src/view/dashboard.php";
     }
     
     // -- Admin Modules --

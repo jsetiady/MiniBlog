@@ -45,5 +45,5 @@
 </body>
     
 <?php
-    include "_template/_footer.php";
+    include "_templates/_footer.php";
 ?>
