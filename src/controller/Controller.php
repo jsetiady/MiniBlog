@@ -8,16 +8,23 @@ class Controller {
     	 session_start();
     } 
 	
-	public function invoke()
+	public function invoke($module)
 	{
-		if(!isset($_SESSION['user']))
+        if(!isset($_SESSION['user']) && $module == "register") 
         {
-		  	$this->showLogin();
-		}
-        else
-        {
-			echo "check role and show user dashboard";
-		}
+            include "src/view/register.php";
+        }
+        else {
+            
+            if(!isset($_SESSION['user']))
+            {
+                $this->showLogin();
+            }
+            else
+            {
+                echo "check role and show user dashboard";
+            }
+        }
 	}
 	
 	//login page
