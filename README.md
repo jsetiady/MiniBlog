@@ -2,10 +2,17 @@
 
 
 ## Deskripsi Singkat
-.... your description .... must go here
+MiniBlog adalah sebuah aplikasi blog sederhana berbasis web. Aplikasi ini diimplementasikan dalam bahasa pemrograman PHP. 
 
 ## Anggota Tim
-Setiap kelompok beranggotakan **3 orang**. Mulai dari NIM terkecil
+ * 23516064 Jessie Setiady
+ * 23517004 Hendra Setiawan
+ * 23517021 Rizky Maulana Rachyan
+
+## Pembagian Tugas
+ * Modul Post - 23516064 Jessie Setiady
+ * Modul User, dan Akses Kontrol - 23517004 Hendra Setiawan
+ * Modul User, dan Comment - 23517021 Rizky Maulana Rachyan
 
 ## Petunjuk Pengerjaan
  * Buatlah Group pada gitlab dengan nama sesuai dengan nama tim (Kelompok-X).
