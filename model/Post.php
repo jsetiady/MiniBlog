@@ -77,6 +77,17 @@ class Post {
         $this->postDate = $postDate;
         return $this;
     }
+
+    public function toArray() {
+        $util = new Util();
+        return $util->utf8ize(array(
+            "postId" => $this->postId,
+            "postTitle" => $this->postTitle,
+            "postAuthor" => $this->postAuthor,
+            "postDate" => $this->postDate,
+            "postContent" => $this->postContent
+        ));
+    }
     
 }
 
