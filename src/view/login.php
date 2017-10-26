@@ -34,7 +34,7 @@
               <div>
                 <h2>Sign up</h2>
                   <p>Create an exclusive <i>Simple Blog - Kelompok-4</i> account!</p>
-                <button type="button" class="btn btn-primary active mt-3">Register Now!</button>
+                <a href="register"><button type="button" class="btn btn-primary active mt-3">Register Now!</button></a>
               </div>
             </div>
           </div>
