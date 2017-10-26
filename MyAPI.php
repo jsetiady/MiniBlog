@@ -17,15 +17,69 @@ class MyAPI extends API
     /**
      * Endpoint
      */
-    protected function example() {
-        if ($this->method == 'GET') {
-            return "Your name is Jeje";
-        } else {
-            return "Only accepts GET requests";
-        }
-    }
+    protected function posts()
+    {
+        if ($this->method == 'GET')
+        {
+            $args = $_GET['request'];
+            $args = explode("/", $args);
+            $author = $args[1];
+            $id = $args[2];
 
-    protected function posts() {
-        return $this->PostModel->getAllPosts();
+            if( empty($author) )
+            {
+                return array(
+                    'data' => array("message" => "Method not allowed"),
+                    'status' => 404
+                );
+            }
+            else
+            {
+                if( empty($id) )
+                {
+                    return array(
+                        'data' => $this->PostModel->getAllPostsByAuthor($author),
+                        'status' => 200
+                    );
+                }
+                else
+                {
+                    return array(
+                        'data' => $this->PostModel->getPostById($author, $id),
+                        'status' => 200
+                    );
+                }
+            }
+        }
+
+        else if ($this->method == 'POST')
+        {
+            $args = $_GET['request'];
+            $args = explode("/", $args);
+            $action = $args[1];
+
+            if (empty($action)) // ADD POST
+            { 
+
+            }
+            else
+            if ($action == "update") // UPDATE POST
+            {
+
+            }
+            else
+            if ($action == "delete") // DELETE POST
+            {
+
+            }
+        }
+
+        else
+        {
+            return array(
+                'data' => "Method not allowed",
+                'status' => 404
+            );
+        }
     }
  }
