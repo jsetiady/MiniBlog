@@ -37,7 +37,17 @@ class Controller {
 	public function posts()
 	{
 		$posts = $this->postModel->getAllPosts();
-		echo json_encode($posts);
+		echo json_decode($posts);
+	}
+
+	public function comments()
+	{
+
+	}
+
+	public function users()
+	{
+
 	}
     
 }

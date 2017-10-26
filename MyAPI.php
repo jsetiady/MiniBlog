@@ -60,7 +60,10 @@ class MyAPI extends API
 
             if (empty($action)) // ADD POST
             { 
-
+                return array(
+                    'data' => array("status" => $this->PostModel->addNewPost($title, $author, $date, $content)),
+                    'status' => 200
+                );
             }
             else
             if ($action == "update") // UPDATE POST
