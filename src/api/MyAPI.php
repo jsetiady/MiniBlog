@@ -1,8 +1,8 @@
 <?php
 
 require_once 'API.class.php';
-require_once 'config/Connection.php';
-require_once 'model/PostModel.php';
+require_once '../config/Connection.php';
+require_once '../model/PostModel.php';
 
 class MyAPI extends API
 {
