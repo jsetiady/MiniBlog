@@ -71,6 +71,8 @@ class PostModel {
         if (!($res = $stmt->get_result())) {
             echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
         }
+        
+        $stmt->close();
 
         $results = $res->fetch_all();
         $posts = array();
@@ -81,6 +83,35 @@ class PostModel {
         }
         $posts = $util->objectsToArray($posts);
         return $posts;
+    }
+    
+    public function addNewPost($data) {
+        $mysqli = Connection::getCon();
+        
+        $sql = "INSERT INTO post (post_title, post_author, post_date, post_content) VALUES (?, ?, ?, ?)";
+
+        if (!($stmt = $mysqli->prepare($sql))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            $return = "Failed";
+        }
+
+        /* Prepared statement, stage 2: bind and execute */
+        $postTitle = $data['postTitle'];
+        $postAuthor = $data['postAuthor'];
+        $postDate = $data['postDate'];
+        $postContent = $data['postContent'];
+        if (!$stmt->bind_param("ssss", $postTitle, $postAuthor, $postDate, $postContent)) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        } else {
+            $return = "Success";
+        }
+
+        $stmt->close();
+        return $return;
     }
 	
 }

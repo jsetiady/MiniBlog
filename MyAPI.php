@@ -58,10 +58,24 @@ class MyAPI extends API
             $args = explode("/", $args);
             $action = $args[1];
 
-            if (empty($action)) // ADD POST
+            if (empty($action))
             { 
                 return array(
-                    'data' => array("status" => $this->PostModel->addNewPost($title, $author, $date, $content)),
+                    'data' => array("message" => "Method not allowed"),
+                    'status' => 404
+                );
+            }
+            else
+            if ($action == "add") // ADD POST
+            {
+                return array(
+                    'data' => 
+                        array(
+                            "message" => $this->PostModel->addNewPost(
+                                array(
+                                    "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"])
+                                ),
+                        ),
                     'status' => 200
                 );
             }
