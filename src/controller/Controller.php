@@ -10,7 +10,7 @@ class Controller {
 	
 	public function invoke($module)
 	{
-        $_SESSION['user'] = array('temp'); // Please remove when session already implemented
+        //$_SESSION['user'] = array('temp'); // Please remove when session already implemented
         
         if(!isset($_SESSION['user']) && $module == "register") 
         {
@@ -60,6 +60,11 @@ class Controller {
     
     
     // -- Blog Owner  --
+    public function showUserDashboard() {
+        
+    }
+    
+    // -- Admin Modules --
     public function showAdminDashboard() {
         
     }
