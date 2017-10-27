@@ -37,6 +37,14 @@ class Controller {
                         case "newpost" :
                             $this->addNewPost();
                             break;
+                        case "editpost" :
+                            if( !isset($_GET['postId'])) {
+                               $this->showUserDashboard();
+                            } else {
+                                // check whether author has permission to update the post
+                                $this->editPost($_GET['postId']);
+                            }
+                            break;
                     }
                     
                     
@@ -89,6 +97,10 @@ class Controller {
     
     public function addNewPost() {
         include "src/view/addPost.php";
+    }
+    
+    public function editPost() {
+        include "src/view/editPost.php";
     }
     
     // -- Admin Modules --

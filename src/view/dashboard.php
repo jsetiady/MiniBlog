@@ -51,7 +51,7 @@
                                 <td><?php echo $d->postDate; ?></td>
                                 <td>
                                     <a href="blog/<?php echo $d->postAuthor."/".$d->postId; ?>"><span class="badge badge-success">View Post</span></a>&nbsp;
-                                    <span class="badge badge-warning">Edit</span>&nbsp;
+                                    <a href="editpost?postId=<?php echo $d->postId?>"><span class="badge badge-warning">Edit</span></a>&nbsp;
                                     <a href="#"><span class="badge badge-danger" data-toggle="modal" data-target="#smallModal">Delete</span></a>
                                 </td>
                               </tr>
