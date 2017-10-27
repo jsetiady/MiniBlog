@@ -189,6 +189,6 @@ function getcomment($post_id)
 	// $return = str_replace(array('[', ']'), '', htmlspecialchars(json_encode($getpostdata), ENT_NOQUOTES));
 	$return = json_decode($getpostdata,true);
 	$return['session_id'] = $getsessionid;
-	return $response;
+	return $getdecodeddata;
 }
 ?>
