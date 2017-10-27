@@ -1,0 +1,90 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f6;
+    font-family: "calibri";
+}
+
+header{
+    height: 300px;
+    margin-top: -2.5%;
+    background-image: url(../asset/header.jpg);
+    background-size: cover;
+    text-align: center;
+}
+
+h1{
+    font-family: "calibri";
+}
+
+header h1{
+    color: white;
+    margin-left: : auto;  
+    margin-right: auto;
+    padding-top: 200px;
+    font-family: "calibri";
+    font-size: 3em;
+}
+
+nav{
+    width:100%;
+    margin-bottom: 0;
+    text-align: center;
+    background-color: #333;
+}
+
+.nav-wrapper{
+    width: 60%;
+    margin: auto;
+}
+
+.nav-wrapper ul {
+    color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.nav-wrapper ul li {
+    float: left;
+}
+
+.nav-wrapper ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.nav-wrapper ul li a:hover {
+    background-color: #111;
+}
+
+.wrapper{
+	width: 60%;
+	margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+table{
+    border-collapse: collapse;
+    width: 50%;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2}
