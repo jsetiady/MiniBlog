@@ -7,7 +7,8 @@
 	$getpostdata = json_decode($getpostdata,true);
 	$postdata = $getpostdata['post_data'];
 	$checksum = $getpostdata['checksum'];
-	$checksumnow = $securitylib->validate_checksum($checksum,$postdata.$securitylib->checksum_salt(),$securitylib->secret_key());	
+	$checksumnow = $securitylib->validate_checksum($checksum,$postdata.$securitylib->checksum_salt(),$securitylib->secret_key());
+	
 	if($checksumnow)
 	{
 		$decryptdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$postdata);
@@ -77,7 +78,7 @@ function addcomment($name,$email,$comment,$post_id)
 }
 
 function getcomment($post_id) {
-	$link = mysqli_connect('localhost', 'root', '', 'simple_blog');
+	$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
 	mysqli_set_charset($link,'utf8');	
 	$sql = "SELECT name, date, comment FROM comment WHERE post_id='$post_id'";
 	$result = mysqli_query($link,$sql);	 
