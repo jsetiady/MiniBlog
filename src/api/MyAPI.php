@@ -186,5 +186,40 @@ class MyAPI extends API
                 ); 
             }
         }
+        else
+        if ($this->method == 'POST')
+        {
+            if( !isset($_POST['postId']) || !isset($_POST['username']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
+                return array(
+                    'data' => array("message" => "Method not allowed"),
+                    'status' => 404
+                );
+            }
+            else
+            {
+                return array(
+                        'data' => 
+                            array(
+                                "message" => $this->CommentModel->addNewComment(
+                                    array(
+                                        "postId" => $_POST["postId"],
+                                        "username" => $_POST["username"],
+                                        "name" => $_POST["name"],
+                                        "email" => $_POST["email"],
+                                        "comment" => $_POST["comment"],
+                                        "commentDate" => $_POST["commentDate"]
+                                    )
+                                ),
+                            ),
+                        'status' => 200
+                    );
+            }
+        }
+        else {
+            return array(
+                'data' => array("message" => "Method not allowed"),
+                'status' => 404
+            );
+        }
     }
  }

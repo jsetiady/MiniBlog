@@ -35,6 +35,41 @@ class CommentModel {
         $comments = $util->objectsToArray($comments);
         return $comments;
     }
+    
+    public function addNewComment($data) {
+        $mysqli = Connection::getCon();
+        
+        $sql = "INSERT INTO comment (post_id, username, name, email, comment, comment_date) VALUES (?, ?, ?, ?, ?, ?)";
+
+        if (!($stmt = $mysqli->prepare($sql))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            $return = "Failed";
+        }
+
+        /* Prepared statement, stage 2: bind and execute */
+        $postId = $data['postId'];
+        $username = $data['username'];
+        $name = $data['name'];
+        $email = $data['email'];
+        $comment = $data['comment'];
+        $commentDate = $data['commentDate'];
+        
+        if (!$stmt->bind_param("isssss", $postId, $username, $name, $email, $comment, $commentDate)) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            $return = "Failed";
+        }
+
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            $return = "Failed";
+        } else {
+            $return = "Success";
+        }
+
+        $stmt->close();
+        return $return;
+    }
+
 }
 
 ?>
