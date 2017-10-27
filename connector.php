@@ -96,7 +96,7 @@ function getuser($session_id,$role)
 	$postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
 	$jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
 	//$jsondata = json_encode(array('data'=>$jsondata),true);
-	$url = "https://kelompok-4.herokuapp.com/be/src/user.php";	
+	$url = "http://localhost/hendra/new/kelompok-4/be/src/user.php";	
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
@@ -189,6 +189,6 @@ function getcomment($post_id)
 	// $return = str_replace(array('[', ']'), '', htmlspecialchars(json_encode($getpostdata), ENT_NOQUOTES));
 	$return = json_decode($getpostdata,true);
 	$return['session_id'] = $getsessionid;
-	return $getpostdata;
+	return $jsondata;
 }
 ?>

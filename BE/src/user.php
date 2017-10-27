@@ -100,7 +100,7 @@ function login($username,$password)
 
 function adduser($username,$name,$password,$email)
 {
-	$link = mysqli_connect('localhost', 'root', '', 'simple_blog');
+	$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
 	mysqli_set_charset($link,'utf8');	 
 	$password = md5($password);
 	$sql = "INSERT INTO user (username, name, password, email, role) VALUES('$username','$name','$password','$email','1')";	 
@@ -117,7 +117,7 @@ function adduser($username,$name,$password,$email)
 }
 
 function getuser() {
-	$link = mysqli_connect('localhost', 'root', '', 'simple_blog');
+	$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
 	mysqli_set_charset($link,'utf8');	
 	$sql = "SELECT username, name, email, role FROM user";
 	$result = mysqli_query($link,$sql);	 
