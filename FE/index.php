@@ -6,6 +6,7 @@ include("connector.php");
 	<title>Simple Blog</title>
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
@@ -52,14 +53,60 @@ include("connector.php");
 				}
 			?>
 			</table>
+
+			<h1>Register</h1>
 			<form method="post" action="index.php">
-				<input type="text" name="username">
-				<input type="text" name="name">
-				<input type="password" name="password">	
-				<input type="email" name="email">
+				<label>Username</label>
+				<input type="text" name="username"><br>
+				<label>Name</label>
+				<input type="text" name="name"><br>
+				<label>Password</label>
+				<input type="password" name="password">	<br>
+				<label>Email</label>
+				<input type="email" name="email"><br>
 				<input type="hidden" name="code" value="adduser">		
 				<input type="submit" value="register">	
 			</form>
+
+			<h1>Add Comment</h1>
+			<form method="post" id="form_comment">
+				<label>Name</label>
+				<input type="text" name="name"><br>
+				<label>Email</label>
+				<input type="text" name="email"><br>
+				<input type="hidden" name="code" value="addcomment">			
+			</form>
+ 			<textarea name="comment" form="form_comment">Write your comment....</textarea> 
+			<input type="button" id="post_comment" value="submit">
+
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$("#post_comment").click(function(){
+						var data = $('#form_comment').serialize();
+						$.ajax({
+							type: 'POST',
+							url: "index.php",
+							data: data,
+							success: function() {
+								$('#comment').load("viewComment.php");
+							}
+						});
+					});
+				});
+				
+				
+			</script>
+			<h1>View Comment</h1>
+			<div id="comment"></div>
+
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$(function() {
+					$('#comment').load("viewComment.php");
+				});
+			});
+			</script>
+
 		</div>
 	</div>
 </body>
