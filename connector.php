@@ -157,6 +157,13 @@ function addcomment($name,$email,$comment,$post_id)
 	return $return;
 }
 
+$code = $_GET['code'];
+if($code == "getcomment")
+{
+	$get = getcomment(1);
+	echo $get;
+}
+
 function getcomment($post_id)
 {
 	$securitylib = new Security_Lib();
@@ -182,6 +189,6 @@ function getcomment($post_id)
 	// $return = str_replace(array('[', ']'), '', htmlspecialchars(json_encode($getpostdata), ENT_NOQUOTES));
 	$return = json_decode($getpostdata,true);
 	$return['session_id'] = $getsessionid;
-	return $return;
+	return $getpostdata;
 }
 ?>
