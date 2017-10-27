@@ -8,7 +8,7 @@
 	$postdata = $getpostdata['post_data'];
 	$checksum = $getpostdata['checksum'];
 	$checksumnow = $securitylib->validate_checksum($checksum,$postdata.$securitylib->checksum_salt(),$securitylib->secret_key());
-	
+	echo "coba";
 	if($checksumnow)
 	{
 		$decryptdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$postdata);
