@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule api/v1/(.*)$ src/api/api.php?request=$1 [QSA,NC,L]
+RewriteRule ^((?!api\/v1\/|public).+)*$ index.php?module=$1 [QSA,NC,L]
