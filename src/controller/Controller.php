@@ -1,9 +1,9 @@
 <?php
 
+include_once("api.config.php");
+
 class Controller {
-	public $postModel;
-	
-	public function __construct()  
+    public function __construct()  
     {  
     	 session_start();
     } 
@@ -25,14 +25,17 @@ class Controller {
             
             else
             {
+                
                 $role = "admin";
                 $role = "user";
                 
                 if ($role == "user") {
-                    
                     switch ($module) {
                         case "home": 
                             $this->showUserDashboard();
+                            break;
+                        case "newpost" :
+                            $this->addNewPost();
                             break;
                     }
                     
@@ -41,7 +44,6 @@ class Controller {
                     
                     $this->showAdminDashboard();
                 }
-                echo "check role and show user dashboard";
             }
         }
 	}
@@ -60,8 +62,33 @@ class Controller {
     
     
     // -- Blog Owner  --
-    public function showUserDashboard() {
+    public function showUserDashboard() 
+    {
+        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/sadasdsa")); // TODO: change to session[username]
+        $arr = array_chunk($arr, 10, true);
         
+        $pg = $_GET['page'];
+        if( empty($pg))
+        {
+            $data = $arr[0];
+            $pg = 1;
+        }
+        else {
+            if((int)$pg > count($arr))
+            {
+                $data = $arr[0];
+            }
+            else
+            {
+                $data = $arr[ ((int) $pg)-1];
+            }
+        }
+        $page = count($arr);
+        include "src/view/dashboard.php";
+    }
+    
+    public function addNewPost() {
+        include "src/view/addPost.php";
     }
     
     // -- Admin Modules --
