@@ -58,7 +58,7 @@
 
 function addcomment($name,$email,$comment,$post_id)
 {
-	$link = mysqli_connect('localhost', 'root', '', 'simple_blog');
+	$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
 	mysqli_set_charset($link,'utf8');	 
 	$date = date("Y-m-d H:i:s");
 	$username = "guest";
