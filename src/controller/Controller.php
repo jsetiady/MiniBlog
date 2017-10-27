@@ -11,7 +11,16 @@ class Controller {
 	public function invoke($module)
 	{
         //$_SESSION['user'] = array('temp'); // Please remove when session already implemented
-        
+        $args = explode("/", $module);
+        if(!isset($_SESSION['user']) || $args[0] == "blog") {
+            if($args[1]!="") {
+                $this->showBlog($args[1], $args[2]);
+            }
+            else {
+                $this->showLogin();
+            }
+        }
+        else
         if(!isset($_SESSION['user']) && $module == "register") 
         {
             $this->showRegister();
@@ -25,8 +34,7 @@ class Controller {
         if(!isset($_SESSION['user']) && $module == "validatelogin") 
         {
             $this->validateLogin();
-        }
-        
+        }        
         else {
             
             if(!isset($_SESSION['user']))
@@ -61,6 +69,16 @@ class Controller {
                             session_destroy();
                             echo '<script>window.location.replace("index.php");</script>';
                             break;
+                        default:
+                            $args = explode("/", $module);
+                            switch($args[0]) {
+                                case "blog": 
+                                    if($args[1]=="") {
+                                        $args[1] = $_SESSION["user_username"];
+                                    }
+                                    $this->showBlog($args[1], $args[2]);
+                                    break;
+                            }
                     }
                     
                     
@@ -84,7 +102,7 @@ class Controller {
         session_start();
         $_SESSION['user'] = array('temp');
         $_SESSION['user_name'] = "Tara Basro";
-        $_SESSION['user_username'] = "tarabasro";
+        $_SESSION['user_username'] = "sadasdsa";
         echo '<script>window.location.replace("index.php");</script>';
 	}
     
@@ -133,6 +151,30 @@ class Controller {
     
     public function editPost() {
         include "src/view/editPost.php";
+    }
+    
+    public function showBlog($author, $postId = "") {
+        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $author . "/" . $postId));
+        $arr = array_chunk($arr, 3, true);
+        
+        $pg = $_GET['page'];
+        if( empty($pg))
+        {
+            $data = $arr[0];
+            $pg = 1;
+        }
+        else {
+            if((int)$pg > count($arr))
+            {
+                $data = $arr[0];
+            }
+            else
+            {
+                $data = $arr[ ((int) $pg)-1];
+            }
+        }
+        $page = count($arr);
+        include "src/view/blog.php";
     }
     
     // -- Admin Modules --

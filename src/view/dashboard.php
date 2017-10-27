@@ -31,7 +31,7 @@
                     <div class="col-lg-12">
                       <div class="card">
                         <div class="card-header">
-                          <i class="fa fa-align-justify"></i> List Post. Author: Tara Basro (<a href="#">View Blog</a>)
+                          <i class="fa fa-align-justify"></i> List Post. Author: Tara Basro (<a href="blog/">View Blog</a>)
                         </div>
                         <div class="card-body">
                           <table class="table" id="example">
