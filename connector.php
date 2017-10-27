@@ -178,10 +178,10 @@ function getcomment($post_id)
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
+    $response1 = curl_exec($curl);
     curl_close($curl);
 	//------------------------
-	$decode = json_decode($response,true);
+	$decode = json_decode($response1,true);
 	$getdecodeddata = $decode['data'];	
 	$getsessionid = $decode['session_id'];
 	$errorcode = $decode['error_code'];
@@ -189,6 +189,6 @@ function getcomment($post_id)
 	// $return = str_replace(array('[', ']'), '', htmlspecialchars(json_encode($getpostdata), ENT_NOQUOTES));
 	$return = json_decode($getpostdata,true);
 	$return['session_id'] = $getsessionid;
-	return $getpostdata;
+	return $response1;
 }
 ?>
