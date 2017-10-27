@@ -3,15 +3,18 @@
 require_once 'API.class.php';
 require_once '../config/Connection.php';
 require_once '../model/PostModel.php';
+require_once '../model/CommentModel.php';
 
 class MyAPI extends API
 {
     protected $PostModel;
+    protected $CommentModel;
     protected $User;
 
     public function __construct($request, $origin) {
         parent::__construct($request);
         $this->PostModel = new PostModel();
+        $this->CommentModel = new CommentModel();
     }
 
     /**
@@ -157,6 +160,31 @@ class MyAPI extends API
                 'data' => "Method not allowed",
                 'status' => 404
             );
+        }
+    }
+    
+    protected function comments()
+    {
+        if ($this->method == 'GET')
+        {
+            $args = $_GET['request'];
+            $args = explode("/", $args);
+            $postId = $args[1];
+
+            if( empty($postId) )
+            {
+                return array(
+                    'data' => array("message" => "Method not allowed"),
+                    'status' => 404
+                );
+            }
+            else
+            {
+                return array(
+                    'data' => $this->CommentModel->getAllCommentsByPostId($postId),
+                    'status' => 200
+                ); 
+            }
         }
     }
  }
