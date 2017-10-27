@@ -12,7 +12,7 @@ class Controller {
 	{
         //$_SESSION['user'] = array('temp'); // Please remove when session already implemented
         $args = explode("/", $module);
-        if(!isset($_SESSION['user']) || $args[0] == "blog") {
+        if(!isset($_SESSION['user']) && $args[0] == "blog") {
             if($args[1]!="") {
                 $this->showBlog($args[1], $args[2]);
             }
