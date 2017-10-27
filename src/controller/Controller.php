@@ -16,6 +16,17 @@ class Controller {
         {
             $this->showRegister();
         }
+        else 
+        if(!isset($_SESSION['user']) && $module == "forgotpassword") 
+        {
+            $this->showForgotPassword();
+        }
+        else 
+        if(!isset($_SESSION['user']) && $module == "validatelogin") 
+        {
+            $this->validateLogin();
+        }
+        
         else {
             
             if(!isset($_SESSION['user']))
@@ -45,6 +56,11 @@ class Controller {
                                 $this->editPost($_GET['postId']);
                             }
                             break;
+                        case "logout":
+                            session_unset();
+                            session_destroy();
+                            echo '<script>window.location.replace("index.php");</script>';
+                            break;
                     }
                     
                     
@@ -62,10 +78,26 @@ class Controller {
         include "src/view/login.php";
 	}
     
+    //authorization
+    public function validateLogin($redirectVal = "false")
+	{
+        session_start();
+        $_SESSION['user'] = array('temp');
+        $_SESSION['user_name'] = "Tara Basro";
+        $_SESSION['user_username'] = "tarabasro";
+        echo '<script>window.location.replace("index.php");</script>';
+	}
+    
     //register page
 	public function showRegister($redirectVal = "false")
 	{
         include "src/view/register.php";
+	}
+    
+    //forgot password page
+	public function showForgotPassword($redirectVal = "false")
+	{
+        include "src/view/forgotpassword.php";
 	}
     
     

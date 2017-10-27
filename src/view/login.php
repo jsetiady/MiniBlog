@@ -21,10 +21,10 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <button type="button" class="btn btn-primary px-4">Login</button>
+                  <a href="validatelogin"><button type="button" class="btn btn-primary px-4">Login</button></a>
                 </div>
                 <div class="col-6 text-right">
-                  <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                    <a href="forgotpassword"><button type="button" class="btn btn-link px-0">Forgot password?</button></a>
                 </div>
               </div>
             </div>

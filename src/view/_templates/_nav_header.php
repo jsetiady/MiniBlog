@@ -13,9 +13,9 @@
           <div class="dropdown-header text-center">
             <strong>Account</strong>
           </div>
-          <a class="dropdown-item" href="http://coreui.io/demo/Ajax_Demo/#"><i class="fa fa-tasks"></i> View My Blog</a>
-          <a class="dropdown-item" href="http://coreui.io/demo/Ajax_Demo/#"><i class="fa fa-wrench"></i> Change Password</a>
-          <a class="dropdown-item" href="http://coreui.io/demo/Ajax_Demo/#"><i class="fa fa-lock"></i> Logout</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> View My Blog</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Change Password</a>
+          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> Logout</a>
         </div>
       </li>
     </ul>
