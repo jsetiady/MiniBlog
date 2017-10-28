@@ -33,7 +33,7 @@ class MyAPI extends API
             {
                 return array(
                     'data' => array("message" => "Method not allowed"),
-                    'status' => 404
+                    'status' => 405
                 );
             }
             else
@@ -65,7 +65,7 @@ class MyAPI extends API
             { 
                 return array(
                     'data' => array("message" => "Method not allowed"),
-                    'status' => 404
+                    'status' => 405
                 );
             }
             else
@@ -75,7 +75,7 @@ class MyAPI extends API
                 {
                     return array(
                         'data' => array("message" => "Mandatory Parameter is Missing"),
-                        'status' => 404
+                        'status' => 405
                     );
                 } else {
                     return array(
@@ -97,7 +97,7 @@ class MyAPI extends API
                 if (empty ($_POST['postId']) || empty ($_POST['postAuthor'])) {
                     return array(
                         'data' => array("message" => "Mandatory Parameter is Missing"),
-                        'status' => 404
+                        'status' => 422
                     );
                 } else {
                     $data = array(
@@ -136,7 +136,7 @@ class MyAPI extends API
                 {
                     return array(
                         'data' => array("message" => "Mandatory Parameter is Missing"),
-                        'status' => 404
+                        'status' => 405
                     );
                 } else {
                     return array(
@@ -158,7 +158,7 @@ class MyAPI extends API
         {
             return array(
                 'data' => "Method not allowed",
-                'status' => 404
+                'status' => 405
             );
         }
     }
@@ -175,7 +175,7 @@ class MyAPI extends API
             {
                 return array(
                     'data' => array("message" => "Method not allowed"),
-                    'status' => 404
+                    'status' => 405
                 );
             }
             else
@@ -192,7 +192,7 @@ class MyAPI extends API
             if( !isset($_POST['postId']) || !isset($_POST['username']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
                 return array(
                     'data' => array("message" => "Method not allowed"),
-                    'status' => 404
+                    'status' => 405
                 );
             }
             else
@@ -218,7 +218,7 @@ class MyAPI extends API
         else {
             return array(
                 'data' => array("message" => "Method not allowed"),
-                'status' => 404
+                'status' => 405
             );
         }
     }

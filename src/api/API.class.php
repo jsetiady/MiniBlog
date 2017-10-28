@@ -81,6 +81,7 @@ abstract class API
             404 => 'Not Found',   
             405 => 'Method Not Allowed',
             500 => 'Internal Server Error',
+            422 => 'Unprocessable Entity'
         ); 
         return ($status[$code])?$status[$code]:$status[500]; 
     }
