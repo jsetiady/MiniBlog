@@ -99,4 +99,4 @@ function getcomment($post_id) {
 	    return null;
 	}
 }
-
+?>
