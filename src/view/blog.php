@@ -35,16 +35,17 @@
                         <?php
                                 if(isset($postId)) {
                                 ?>
-                        
-                                    <div class="card ">
-                                        <div class="card-body">
-                                            <h4>Comment</h4>
-                                            <div class="row">
-                                                <div class="col-md-3"><b>Name (email) </b> on <i>tanggal</i></div>
-                                                <div class="col-md-9" style="background-color:#f0f3f5;min-height:60px">comment</div>
+                                        <div class="card ">
+                                            <div class="card-body">
+                                                <h4>Comment</h4>
+                                                <div id="commentSection">
+                                                    <div class="row">
+                                                        <div class="col-md-3">0 comment</div>
+                                                    </div><br/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    
                         
                                       <div class="card">
                                         <div class="card-body">
@@ -164,10 +165,39 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function() {
+       reloadComment(); 
+    });
     
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
+    }
+    
+    function getCommentStructure(name, email, date, comment) {
+        var commentStructure = "<div class=\"row\"><div class=\"col-md-3\"><b>"+name+" ("+email+") </b> on <i>"+date+"</i></div><div class=\"col-md-9\" style=\"background-color:#f0f3f5;min-height:60px\">"+comment+"</div></div><br/>";
+        return commentStructure;
+    }
+    
+    function reloadComment() {
+        $.ajax({
+            type:"GET", 
+            url: "<?php echo API_URL;?>api/v1/comments/<?php echo $postId;?>", 
+            success: function(data) {
+                console.log(data.length);
+                for(i=0;i<data.length;i++) {
+                    var commentStructure = getCommentStructure(data[i].name, data[i].email, data[i].commentDate, data[i].comment);
+                    if(i==0) {
+                        $("#commentSection").html(commentStructure);
+                    } else {
+                        $("#commentSection").append(commentStructure);
+                    }
+                }
+            }, 
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.status);
+            },
+        });
     }
 
     $("button#addComment").click(function(){
@@ -234,6 +264,7 @@
                 },
                 success:function (data) {
                    $("#commentForm")[0].reset();
+                   reloadComment();
                 },
                 fail:function(data) {
                     console.log("error");
