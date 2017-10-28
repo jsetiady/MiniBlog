@@ -367,11 +367,7 @@ class Controller {
         $page = count($arr);
         include "src/view/blog.php";
     }
-        
-    public function editPost() {
-        include "src/view/editPost.php";
-    }
-    
+            
     // -- Admin Modules --
     public function showAdminDashboard() {
         

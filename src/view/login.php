@@ -33,6 +33,7 @@
             </form>
             </div>
           </div>
+            <!--
           <div class="card text-white bg-primary py-5 " style="width:44%">
             <div class="card-body text-center">
               <div>
@@ -42,6 +43,7 @@
               </div>
             </div>
           </div>
+            -->
         </div>
       </div>
     </div>
