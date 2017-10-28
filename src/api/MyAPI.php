@@ -3,23 +3,27 @@
 require_once 'API.class.php';
 require_once '../config/Connection.php';
 require_once '../model/PostModel.php';
-require_once '../model/CommentModel.php';
 
 class MyAPI extends API
 {
     protected $PostModel;
-    protected $CommentModel;
     protected $User;
 
     public function __construct($request, $origin) {
         parent::__construct($request);
         $this->PostModel = new PostModel();
-        $this->CommentModel = new CommentModel();
     }
 
     /**
      * Endpoint
      */
+	 protected function user()
+	 {
+		 include ('user.php');
+         return $response;
+	 }
+	 
+	 
     protected function posts()
     {
         if ($this->method == 'GET')
@@ -158,66 +162,6 @@ class MyAPI extends API
         {
             return array(
                 'data' => "Method not allowed",
-                'status' => 404
-            );
-        }
-    }
-    
-    protected function comments()
-    {
-        if ($this->method == 'GET')
-        {
-            $args = $_GET['request'];
-            $args = explode("/", $args);
-            $postId = $args[1];
-
-            if( empty($postId) )
-            {
-                return array(
-                    'data' => array("message" => "Method not allowed"),
-                    'status' => 404
-                );
-            }
-            else
-            {
-                return array(
-                    'data' => $this->CommentModel->getAllCommentsByPostId($postId),
-                    'status' => 200
-                ); 
-            }
-        }
-        else
-        if ($this->method == 'POST')
-        {
-            if( !isset($_POST['postId']) || !isset($_POST['username']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
-                return array(
-                    'data' => array("message" => "Method not allowed"),
-                    'status' => 404
-                );
-            }
-            else
-            {
-                return array(
-                        'data' => 
-                            array(
-                                "message" => $this->CommentModel->addNewComment(
-                                    array(
-                                        "postId" => $_POST["postId"],
-                                        "username" => $_POST["username"],
-                                        "name" => $_POST["name"],
-                                        "email" => $_POST["email"],
-                                        "comment" => $_POST["comment"],
-                                        "commentDate" => $_POST["commentDate"]
-                                    )
-                                ),
-                            ),
-                        'status' => 200
-                    );
-            }
-        }
-        else {
-            return array(
-                'data' => array("message" => "Method not allowed"),
                 'status' => 404
             );
         }
