@@ -40,7 +40,7 @@
                                         <div class="card-body">
                                             <h4>Comment</h4>
                                             <div class="row">
-                                                <div class="col-md-3">nama, email, tanggal</div>
+                                                <div class="col-md-3"><b>Name (email) </b> on <i>tanggal</i></div>
                                                 <div class="col-md-9" style="background-color:#f0f3f5;min-height:60px">comment</div>
                                             </div>
                                         </div>
@@ -49,33 +49,37 @@
                                       <div class="card">
                                         <div class="card-body">
                                             <h4>Add comment</h4>
-                                            <div class="form-group row">
-                                              <label class="col-md-3 form-control-label" for="addCommentName">Name</label>
-                                              <div class="col-md-9">
-                                                <input type="text" id="addCommentName" name="addCommentName" class="form-control" placeholder="Enter Name..">
-                                                <div id="feedbackAddCommentName" class="invalid-feedback hidden">
-                                                  Invalid name
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="form-group row">
-                                              <label class="col-md-3 form-control-label" for="addCommentEmail">Email</label>
-                                              <div class="col-md-9">
-                                                <input type="email" id="addCommentEmail" name="addCommentEmail" class="form-control" placeholder="Enter Email..">
-                                                <div id="feedbackAddCommentEmail" class="invalid-feedback hidden">
-                                                  Invalid email
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-3 form-control-label" for="addCommentComment">Comment</label>
-                                                <div class="col-md-9">
-                                                  <textarea id="addCommentComment" name="addCommentComment" rows="9" class="form-control" placeholder="Content.."></textarea>
-                                                  <div id="feedbackAddCommentComment" class="invalid-feedback hidden">
-                                                  Input invalid
-                                                  </div>
-                                              </div>
-                                            </div>
+                                                <form id="commentForm" method="post" >
+                                                    <div class="form-group row">
+                                                      <label class="col-md-3 form-control-label" for="addCommentName">Name</label>
+                                                      <div class="col-md-9">
+                                                        <input type="text" id="addCommentName" name="name" class="form-control" placeholder="Enter Name..">
+                                                        <div id="feedbackAddCommentName" class="invalid-feedback hidden">
+                                                          Invalid name
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                      <label class="col-md-3 form-control-label" for="addCommentEmail">Email</label>
+                                                      <div class="col-md-9">
+                                                        <input type="email" id="addCommentEmail" name="email" class="form-control" placeholder="Enter Email..">
+                                                        <div id="feedbackAddCommentEmail" class="invalid-feedback hidden">
+                                                          Invalid email
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 form-control-label" for="addCommentComment">Comment</label>
+                                                        <div class="col-md-9">
+                                                          <textarea id="addCommentComment" name="comment" rows="9" class="form-control" placeholder="Content.."></textarea>
+                                                          <div id="feedbackAddCommentComment" class="invalid-feedback hidden">
+                                                          Input invalid
+                                                          </div>
+                                                          <input type="hidden" id="addCommentDate" name="commentDate" />
+                                                          <input type="hidden" id="addCommentPostId" name="postId" />
+                                                      </div>
+                                                    </div>
+                                                </form>
                                         </div>
                                         <div class="card-footer">
                                           <button id="addComment" type="submit" class="btn btn-sm btn-primary float-right"><i class="fa fa-dot-circle-o"></i> Add comment</button>
@@ -88,6 +92,19 @@
                                 ?>
                         <?php endforeach; ?>
                         
+                        <?php
+                        if (empty($data))
+                        {
+                        ?>
+                       
+                        <div class="card card" style="margin-top:40px">
+                            <div class="card-body">
+                              No post found.
+                            </div>
+                        </div>
+                        <?
+                        }
+                        ?>
                         
                         <?php if(!isset($postId)) { ?>
                         <ul class="pagination">
@@ -103,18 +120,29 @@
                           </ul>
                         <?php } ?>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card card-accent-info" style="margin-top:40px">
-                            <div class="card-header">
-                              Blog Author
-                            </div>
-                            <div class="card-body">
-                              Name
-                              Username
-                            </div>
-                            
-                          </div>
-                    </div>
+                    
+                    <?php
+                        if (!empty($data))
+                        {
+                    ?>
+                        <div class="col-md-3">
+                            <div class="card card-accent-info" style="margin-top:40px">
+                                <div class="card-header">
+                                  Blog Author
+                                </div>
+                                <div class="card-body">
+                                    <div class="input-group mb-3">
+                                      <span class="input-group-addon">@</span>
+                                      <input style="background-color:#FFF" type="text" class="form-control" disabled placeholder="Username" value="<?php echo $data[0]->postAuthor; ?>">
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                        <?
+                        }
+                        ?>
+                    
+                    
                 </div>
             </div>
           </div>
@@ -144,10 +172,13 @@
 
     $("button#addComment").click(function(){
         
+        var valid = true;
         //check whether form is empty
         if($("input#addCommentName").val()=="") {
             $("input#addCommentName").addClass("is-invalid");
             $("div#feedbackAddCommentName").removeClass("hidden");
+            valid = false;
+            console.log(1);
         } else {
             $("input#addCommentName").removeClass("is-invalid");
             $("div#feedbackAddCommentName").addClass("hidden");
@@ -156,6 +187,8 @@
         if($("input#addCommentEmail").val()=="") {
             $("input#addCommentEmail").addClass("is-invalid");
             $("div#feedbackAddCommentEmail").removeClass("hidden");
+            valid = false;
+            console.log(2);
         } else {
             $("input#addCommentEmail").removeClass("is-invalid");
             $("div#feedbackAddCommentEmail").addClass("hidden");
@@ -164,6 +197,8 @@
         if($("textarea#addCommentComment").val()=="") {
             $("textarea#addCommentComment").addClass("is-invalid");
             $("div#feedbackAddCommentComment").removeClass("hidden");
+            valid = false;
+            console.log(3);
         } else {
             
             $("textarea#addCommentComment").removeClass("is-invalid");
@@ -174,10 +209,41 @@
         if(!validateEmail($("input#addCommentEmail").val())) {
             $("input#addCommentEmail").addClass("is-invalid");
             $("div#feedbackAddCommentEmail").removeClass("hidden");
+            valid = false;
+            console.log(4);
         } else {
             $("input#addCommentEmail").removeClass("is-invalid");
             $("div#feedbackAddCommentEmail").addClass("hidden");
         }
+        
+        if(valid) {
+            $("input#addCommentDate").val("2017-01-01 00:00:00");
+            $("input#addCommentPostId").val(<?php echo $postId?>);
+            
+            
+            var data = $('#commentForm').serialize();
+            $.ajax({
+                type : 'POST',
+                url : "<?php echo API_URL;?>api/v1/comments",           
+                data: {
+                    postId : $('input#addCommentPostId').val(),
+                    name   : $('input#addCommentName').val(),
+                    email  : $('input#addCommentEmail').val(),
+                    comment  : $('textarea#addCommentComment').val(),
+                    commentDate  : $('input#addCommentDate').val()
+                },
+                success:function (data) {
+                   $("#commentForm")[0].reset();
+                },
+                fail:function(data) {
+                    console.log("error");
+                }
+            });     
+
+        }
+        
+        
+        
     });
 
 </script>
