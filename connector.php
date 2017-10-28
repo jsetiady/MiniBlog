@@ -173,7 +173,7 @@ function getcomment($post_id)
 	$postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
 	$jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
 	//$jsondata = json_encode(array('data'=>$jsondata),true);
-	$url = "https://kelompok-4.herokuapp.com/be/api/comment.php";	
+	$url = "https://kelompok-4.herokuapp.com/be/src/comment.php";	
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
