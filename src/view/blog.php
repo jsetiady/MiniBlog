@@ -298,7 +298,6 @@
         }
         
         if(valid) {
-            $("input#addCommentDate").val("2017-01-01 00:00:00");
             $("input#addCommentPostId").val(<?php echo $postId?>);
             
             
@@ -311,7 +310,6 @@
                     name   : $('input#addCommentName').val(),
                     email  : $('input#addCommentEmail').val(),
                     comment  : $('textarea#addCommentComment').val(),
-                    commentDate  : $('input#addCommentDate').val()
                 },
                 success:function (data) {
                    $("#commentForm")[0].reset();

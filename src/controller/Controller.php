@@ -105,7 +105,7 @@ class Controller {
                             switch($args[0]) {
                                 case "blog": 
                                     if($args[1]=="") {
-                                        $args[1] = $_SESSION["user_username"];
+                                        $args[1] = $_SESSION["username"];
                                     }
                                     $this->showBlog($args[1], $args[2]);
                                     break;
@@ -303,7 +303,7 @@ class Controller {
     // -- Blog Owner  --
     public function showUserDashboard() 
     {
-        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/sadasdsa")); // TODO: change to session[username]
+        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $_SESSION['username'])); 
         $arr = array_chunk($arr, 10, true);
         
         $pg = $_GET['page'];

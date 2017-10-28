@@ -196,7 +196,7 @@ class MyAPI extends API
         else
         if ($this->method == 'POST')
         {
-            if( !isset($_POST['postId']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
+            if( !isset($_POST['postId']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) ) {
                 return array(
                     'data' => array("message" => "Method not allowed"),
                     'status' => 405
@@ -214,7 +214,7 @@ class MyAPI extends API
                                         "name" => $_POST["name"],
                                         "email" => $_POST["email"],
                                         "comment" => $_POST["comment"],
-                                        "commentDate" => $_POST["commentDate"]
+                                        "commentDate" => date('Y-m-d H:i:s')
                                     )
                                 ),
                             ),
