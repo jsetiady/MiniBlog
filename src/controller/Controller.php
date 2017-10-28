@@ -169,17 +169,11 @@ class Controller {
         $getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
         $postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum));
         $jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
-        $url = API_URL."user/";    
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $decode = json_decode($response,true);
-        $getdecodeddata = $decode['data'];  
-        $getsessionid = $decode['session_id'];
-        $errorcode = $decode['error_code'];
+        $url = API_URL."api/v1/user/";
+        $decode = json_decode($this->httpPost($url, array("data" => $jsondata))); 
+        $getdecodeddata = $decode->data;  
+        $getsessionid = $decode->session_id;
+        $errorcode = $decode->error_code;
         $getpostdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$getdecodeddata);
         $return = json_decode($getpostdata,true);
         if(!empty($getsessionid))
@@ -187,14 +181,13 @@ class Controller {
             $_SESSION['session_id'] = $getsessionid;                
             $_SESSION['name'] = $return['name'];
             $_SESSION['role'] = $return['role'];
-            $_SESSION['username'] = $username;              
-            echo '<script>window.alert("Success to login");</script>';                 
+            $_SESSION['username'] = $username;
+            echo '<script>window.location.replace("index.php");</script>';
         }
         else
         {
-            echo '<script>window.alert("Failed to login");</script>';                   
+            echo '<script>window.location.replace("index.php?error=1");</script>';
         }
-        echo '<script>window.location.replace("index.php");</script>';
     }
     
    public function checkSession($redirectVal = "false")

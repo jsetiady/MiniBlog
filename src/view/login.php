@@ -11,7 +11,12 @@
             <div class="card-body">
               <h1>Login</h1>
               <p class="text-muted">Sign In to your account</p>
-            <form method="POST" action="validatelogin">
+                <?php if($_GET['error']==1) { ?>
+                <div style="color:red">
+                  Invalid username or password
+                </div>
+                <?php } ?>
+            <form method="POST" id="login" action="validatelogin">
               <div class="input-group mb-3">
                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
                 <input type="text" class="form-control" placeholder="Username" name="username">
@@ -22,7 +27,7 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                    <a href="validatelogin"><button type="button" class="btn btn-primary px-4">Login</button></a>
+                    <a href="#" onclick='$("form#login").submit()'><button type="button" class="btn btn-primary px-4">Login</button></a>
 
                 </div>
         
