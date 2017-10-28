@@ -36,7 +36,7 @@
                             </div>
                             <div class="card-body">
                                 <p> <?php echo $d->postContent; ?></p>
-                                <?php if(!isset($postId)) { ?><a href="#" class="float-right">View Comments</a> <?php } ?>
+                                <?php if(!isset($postId)) { ?><a href="<?php echo API_URL . "blog/" . $d->postAuthor . "/" . $d->postId ;?>" class="float-right">View Comment(s)</a> <?php } ?>
                             </div>
                          </div>
                         <?php

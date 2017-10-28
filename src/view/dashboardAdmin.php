@@ -19,19 +19,12 @@
       <div class="container-fluid">
         <div id="ui-view" style="opacity: 1;">
             <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-8"></div>
-                    <div class="col-2"></div>
-                    <div class="col-2">
-                        <a href="newpost"><button type="button" class="btn btn-success active mt-3">Add New Post</button><br/></a>
-                    </div>
-                </div>
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-lg-12">
                       <div class="card">
                         <div class="card-header">
-                          <i class="fa fa-align-justify"></i> List Post. Author: Tara Basro (<a href="#">View Blog</a>)
+                          <i class="fa fa-align-justify"></i> List User
                         </div>
                         <div class="card-body">
                           <table class="table" id="example">
@@ -51,7 +44,7 @@
                                 <td><?php echo $d['username']; ?></td>
                                 <td><?php echo $d['name']; ?></td>
                                 <td><?php echo $d['email']; ?></td>
-                                <td><?php echo $d['role']; ?></td>
+                                <td><?php echo $d['role'] ? "user": "admin"; ?></td>
                               </tr>
                                 <?php
                                 endforeach;

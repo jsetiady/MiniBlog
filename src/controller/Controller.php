@@ -12,7 +12,7 @@ class Controller {
     {        
         $args = explode("/", $module);
         if(!isset($_SESSION['session_id']) && $args[0] == "blog") {
-            if($args[1]!="") {
+            if($args[1]!="" && $args[1]!="index.php") {
                 $this->showBlog($args[1], $args[2]);
             }
             else {
