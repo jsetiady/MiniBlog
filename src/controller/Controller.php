@@ -62,6 +62,9 @@ class Controller {
                         case "updatePost" :
                             $this->updatePost();
                             break;
+                        case "deletePost" :
+                            $this->deletePost();
+                            break;
                         case "editpost" :
                             if( !isset($_GET['postId'])) {
                                $this->showUserDashboard();
@@ -208,8 +211,24 @@ class Controller {
         $result = json_decode($this->httpPost($url, $data));
         
         if($result->message->affected_row==1) {
-           echo '<script>window.location.replace("index.php");</script>';
+           echo '<script>window.location.replace('.API_URL .'"index.php");</script>';
         }
+    }
+    
+    public function deletePost() {
+        $url = API_URL . 'api/v1/posts/delete';
+        $data = array(
+            'postId' => $_POST['postId'],
+            'postAuthor' => $_POST['postAuthor']
+        );
+        $result = json_decode($this->httpPost($url, $data));
+        
+        if($result->message->affected_row==1) {
+           echo '<script>window.location.replace("'.API_URL .'index.php");</script>';
+          
+        }
+        
+        
     }
     
     public function showBlog($author, $postId = "") {

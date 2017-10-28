@@ -24,8 +24,15 @@
                         <div class="card card-accent-info" style="margin-top:40px">
                             <div class="card-header">
                                 <a href="<?php echo API_URL . "blog/" . $d->postAuthor . "/" . $d->postId ;?>"><h3><?php echo $d->postTitle; ?></h3></a><span>Posted by <b><?php echo $d->postAuthor; ?></b> at <?php echo $d->postDate?></span>
+                                <?php if ($_SESSION['username'] == $d->postAuthor) { ?>
                                 <a href="#" onclick='confirmdelete(<?php echo $d->postId?>, "<?php echo $d->postAuthor?>")'><span class="badge badge-danger float-right launch-confirm" data-toggle="modal"   >Delete</span></a>&nbsp;&nbsp;
-                                <a href="<?php echo API_URL?>editpost/<?php echo $d->postAuthor; ?>/<?php echo $d->postId?>"><span class="badge badge-warning float-right">Edit</span></a>
+                                <a href="<?php echo API_URL?>editpost?postId=<?php echo $d->postId?>"><span class="badge badge-warning float-right">Edit</span></a>
+                                <form method="post" action="<?php echo API_URL?>deletePost" id="delete<?php echo $d->postId;?>">
+                                    <input type="hidden" name="postAuthor" value="<?php echo $d->postAuthor; ?>"/>
+                                    <input type="hidden" name="postId" value="<?php echo $d->postId;?>"/>
+                                    <input type="hidden" name="back" value="blog"/>
+                                </form>
+                                <?php } ?>
                             </div>
                             <div class="card-body">
                                 <p> <?php echo $d->postContent; ?></p>
@@ -191,22 +198,9 @@
     
     
    function confirmdelete(id, author) {
-       var result = confirm("Apakah Anda yakiin menghapus post ini?");
+       var result = confirm("Apakah Anda yakin menghapus post ini?");
         if (result) {
-            $.ajax({
-                type : 'POST',
-                url : "<?php echo API_URL;?>api/v1/posts/delete",           
-                data: {
-                    postId : id,
-                    postAuthor : author,
-                },
-                success:function (data) {
-                    location.reload();                
-                },
-                fail:function(data) {
-                    console.log("error");
-                }
-            }); 
+            $("form#delete"+id).submit();
         }
 
    }

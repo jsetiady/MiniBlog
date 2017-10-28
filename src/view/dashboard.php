@@ -51,8 +51,11 @@
                                 <td><?php echo $d->postDate; ?></td>
                                 <td>
                                     <a href="blog/<?php echo $d->postAuthor."/".$d->postId; ?>"><span class="badge badge-success">View Post</span></a>&nbsp;
-                                    <a href="editpost?postId=<?php echo $d->postId?>"><span class="badge badge-warning">Edit</span></a>&nbsp;
-                                    <a href="#" onclick='confirmdelete(<?php echo $d->postId?>, "<?php echo $d->postAuthor?>")'><span class="badge badge-danger" data-toggle="modal">Delete</span></a>
+                                    <a href="editpost?postId=<?php echo $d->postId?>"><span class="badge badge-warning">Edit</span></a>&nbsp;<a href="#" onclick='confirmdelete(<?php echo $d->postId;?>, "<?php echo $d->postAuthor?>")'><span  class="badge badge-danger" >Delete</span></a>
+                                    <form method="post" action="deletePost" id="delete<?php echo $d->postId;?>">
+                                        <input type="hidden" name="postAuthor" value="<?php echo $d->postAuthor; ?>"/>
+                                        <input type="hidden" name="postId" value="<?php echo $d->postId;?>"/>
+                                    </form>
                                 </td>
                               </tr>
                                 <?php
@@ -123,22 +126,9 @@
 
 <script type="text/javascript">
     function confirmdelete(id, author) {
-       var result = confirm("Apakah Anda yakiin menghapus post ini?");
+       var result = confirm("Apakah Anda yakin menghapus post ini?");
         if (result) {
-            $.ajax({
-                type : 'POST',
-                url : "<?php echo API_URL;?>api/v1/posts/delete",           
-                data: {
-                    postId : id,
-                    postAuthor : author,
-                },
-                success:function (data) {
-                    location.reload();                
-                },
-                fail:function(data) {
-                    console.log("error");
-                }
-            }); 
+            $("form#delete"+id).submit();
         }
 
    }
