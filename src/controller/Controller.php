@@ -248,12 +248,12 @@ class Controller {
         $username = $_SESSION['username'];
         $session_id = $_SESSION['session_id'];      
         $role = $_SESSION['role'];
-        $data = json_encode(array('action'=>'getuser','username'=>'henrijes','session_id'=>'ce66cf7c3a11290100d4b9d2e4eec625'),true);
+        $data = json_encode(array('action'=>'getuser','username'=>$_SESSION['username'],'session_id'=>$_SESSION['session_id']),true);
         $encryptdata = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$data);
         $getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
         $postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
         $jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
-        $url = API_URL . "user/";    
+        $url = API_URL . "api/v1/user/";    
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
