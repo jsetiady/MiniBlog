@@ -176,24 +176,6 @@
         
         if(valid) { 
             $("form#addPost").submit();
-            /*$.ajax({
-                type : 'POST',
-                url : "<?php echo API_URL;?>api/v1/posts/add",           
-                data: {
-                    postTitle : $('input#postTitle').val(),
-                    postAuthor : "<?php echo $_SESSION['username']; ?>",
-                    postDate  : $('input#postDate').val() + " " + $("input#postTime").val(),
-                    postContent  : $('textarea#postContent').val()
-                },
-                success:function (data) {
-                    window.location.href = "<?php echo API_URL; ?>index.php";
-
-                },
-                fail:function(data) {
-                    console.log("error");
-                }
-            });   
-            */
 
         }
         
