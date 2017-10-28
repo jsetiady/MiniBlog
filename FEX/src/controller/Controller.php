@@ -127,6 +127,11 @@ class Controller {
 			$_SESSION['name'] = $return['name'];
 			$_SESSION['role'] = $return['role'];
 			$_SESSION['username'] = $username;				
+			echo '<script>window.alert("Success to login");</script>';					
+		}
+		else
+		{
+			echo '<script>window.alert("Failed to login");</script>';					
 		}
         echo '<script>window.location.replace("index.php");</script>';
 	}
