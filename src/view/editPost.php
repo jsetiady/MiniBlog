@@ -19,46 +19,54 @@
       <div class="container-fluid">
         <div id="ui-view" style="opacity: 1;">
             <div class="animated fadeIn">
-                <div class="row"><div class="col-md-2"><a href="home"><button type="button" class="btn btn-primary active mt-3"> << Back to  Post List </button><br/></a></div></div>
+                <div class="row"><div class="col-md-2"><a href="#" onclick="goBack()"><button type="button" class="btn btn-primary active mt-3"> << Back </button><br/></a></div></div>
                 <div class="row"><div class="col-md-2"><br/></div></div>
                 <div class="row">
                     <div class="col-md-12">
                       <div class="card">
                         <div class="card-header">
-                          <strong>Edit Post</strong>
+                          <strong>Edit New Post</strong>
                         </div>
                         <div class="card-body">
-                          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                          <form action="updatePost" id="editPost" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label">Blog Author</label>
                               <div class="col-md-9">
-                                <p class="form-control-static">Name (Username)</p>
+                                <p class="form-control-static"><?php echo $_SESSION['username']; ?></p>
                               </div>
+                                
                             </div>
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label" for="text-input">Post Title</label>
                               <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
-                                <span class="help-block">This is a help text</span>
-                              </div>
+                                <input type="hidden" id="postId" name="postId" class="form-control" value="<?php echo $postId ?>">
+                                <input type="hidden" id="postAuthor" name="postAuthor" class="form-control" value="<?php echo $_SESSION['username']; ?>">
+                                <input type="text" id="postTitle" name="postTitle" class="form-control" placeholder="Post Title" value="<?php echo $data->postTitle;?>">
+                              <div id="feedbackPostTitle" class="invalid-feedback hidden">
+                                  Invalid input
+                                </div>
+                                </div>
+                                
                             </div>
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label" for="text-input">Post Date</label>
                               <div class="col-md-9">
-                                <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
-                                <span class="help-block">This is a help text</span>
+                                    <p class="form-control-static"><?php echo $data->postDate; ?></p>
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label class="col-md-3 form-control-label" for="textarea-input">Textarea</label>
+                              <label class="col-md-3 form-control-label" for="textarea-input">Content</label>
                               <div class="col-md-9">
-                                <textarea id="textarea-input" name="textarea-input" rows="9" class="form-control" placeholder="Content.."></textarea>
+                                <textarea id="postContent" name="postContent" rows="9" class="form-control" placeholder="Content.."><?php echo $data->postContent;?></textarea>
+                                <div id="feedbackPostContent" class="invalid-feedback hidden">
+                                  Invalid input
+                                </div>
                               </div>
                             </div>
                           </form>
                         </div>
                         <div class="card-footer">
-                          <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Update</button>
+                          <button type="submit" id="editPost" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Update</button>
                           <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
                         </div>
                       </div>
@@ -75,7 +83,6 @@
       </footer>
  
     
-    
 
 </body>
 
@@ -84,3 +91,43 @@
 <?php
     include "_templates/_footer.php";
 ?>
+
+
+<script>
+    
+    function goBack() {
+        window.history.back();
+    }
+        
+    $("button#editPost").click(function(){
+        
+        var valid = true;
+        //check whether form is empty
+        if($("input#postTitle").val()=="") {
+            $("input#postTitle").addClass("is-invalid");
+            $("div#feedbackPostTitle").removeClass("hidden");
+            valid = false;
+        } else {
+            $("input#postTitle").removeClass("is-invalid");
+            $("div#feedbackPostTitle").addClass("hidden");
+        }
+                
+        if($("textarea#postContent").val()=="") {
+            $("textarea#postContent").addClass("is-invalid");
+            $("div#feedbackPostContent").removeClass("hidden");
+            valid = false;
+        } else {
+            $("textarea#postContent").removeClass("is-invalid");
+            $("div#feedbackPostContent").addClass("hidden");
+        }
+        
+        
+        if(valid) { 
+            $("form#editPost").submit();
+        }
+        
+        
+        
+    });
+</script>
+    

@@ -59,6 +59,9 @@ class Controller {
                         case "addPost" :
                             $this->addPost();
                             break;
+                        case "updatePost" :
+                            $this->updatePost();
+                            break;
                         case "editpost" :
                             if( !isset($_GET['postId'])) {
                                $this->showUserDashboard();
@@ -182,10 +185,25 @@ class Controller {
     }
     
     public function editPost($postId) {
+        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $_SESSION["username"] ."/" .$postId));
+        $data = $arr[0];
         include "src/view/editPost.php";
     }
     
-
+    public function updatePost() {
+        $url = API_URL . 'api/v1/posts/update';
+        $data = array(
+            'postId' => $_POST['postId'],
+            'postTitle' => $_POST['postTitle'],
+            'postAuthor' => $_POST['postAuthor'],
+            'postContent' => $_POST['postContent']
+        );
+        $result = json_decode($this->httpPost($url, $data));
+        
+        if($result->message->affected_row==1) {
+           echo '<script>window.location.replace("index.php");</script>';
+        }
+    }
     
     public function showBlog($author, $postId = "") {
         $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $author . "/" . $postId));

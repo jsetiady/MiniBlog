@@ -166,11 +166,10 @@ class PostModel {
             }
 
             /* Prepared statement, stage 2: bind and execute */
-
             switch(count($col))
             {
                 case 3: $binding = $stmt->bind_param("sis", $col[0], $col[1], $col[2]); break;
-                case 4: $binding = $stmt->bind_param("ssis", $col[0], $col[1], $col[2], $col[3], $col[4]); break;
+                case 4: $binding = $stmt->bind_param("ssis", $col[0], $col[1], $col[2], $col[3]); break;
                 case 5: $binding = $stmt->bind_param("sssis", $col[0], $col[1], $col[2], $col[3], $col[4]); break;
             }
 
