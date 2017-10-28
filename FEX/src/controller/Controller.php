@@ -51,6 +51,28 @@ class Controller {
                                 // check whether author has permission to update the post
                                 $this->editPost($_GET['postId']);
                             }
+                            break;
+                        case "changepassword" :
+							$checksession = $this->checkSession();
+                            if( !$checksession) {
+                               $this->showUserDashboard();
+                            } else {
+								if(!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['renew_password']))
+								{
+									$check = $this->changePassword();
+									if($check)
+									{
+										echo '<script>window.alert("Success to change password");</script>';
+										echo '<script>window.location.replace("index.php");</script>';										
+									}
+									else
+									{
+										echo '<script>window.alert("Failed to change password");</script>';
+										echo '<script>window.location.replace("index.php");</script>';										
+									}
+								}
+                                $this->showChangePassword();
+                            }
                             break;							
                         case "logout":
                             session_unset();
@@ -109,6 +131,57 @@ class Controller {
         echo '<script>window.location.replace("index.php");</script>';
 	}
 	
+	public function checkSession($redirectVal = "false")
+	{
+		include("lib/security_lib.php");	
+		$securitylib = new Security_Lib();
+		$username = $_SESSION['username'];
+		$session_id = $_SESSION['session_id'];	
+		$data = json_encode(array('action'=>'checksession','username'=>$username,'session_id'=>$session_id),true);
+		$encryptdata = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$data);
+		$getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
+		$postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
+		$jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
+		$url = API_URL . "user.php";	
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$decode = json_decode($response,true);
+		$getdecodeddata = $decode['data'];	
+		$getpostdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$getdecodeddata);
+		$return = json_decode($getpostdata,true);
+		return $return;
+	}	
+	
+	public function changePassword($redirectVal = "false")
+	{
+		$securitylib = new Security_Lib();
+		$username = $_SESSION['username'];
+		$session_id = $_SESSION['session_id'];		
+		$oldpassword = $_POST['old_password'];
+		$newpassword = $_POST['new_password'];		
+		$data = json_encode(array('action'=>'changepassword','username'=>$username,'session_id'=>$session_id,'old_password'=>$oldpassword,'new_password'=>$newpassword),true);
+		$encryptdata = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$data);
+		$getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
+		$postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
+		$jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
+		$url = API_URL . "user.php";	
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$decode = json_decode($response,true);
+		$getdecodeddata = $decode['data'];	
+		$getpostdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$getdecodeddata);
+		$return = json_decode($getpostdata,true);
+		return $return;
+	}	
+	
     
     //register page
 	public function showRegister($redirectVal = "false")
@@ -152,6 +225,10 @@ class Controller {
     public function addNewPost() {
         include "src/view/addPost.php";
     }
+	
+    public function showChangePassword() {
+        include "src/view/changePassword.php";
+    }	
     
     public function editPost() {
         include "src/view/editPost.php";
