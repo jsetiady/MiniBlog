@@ -71,7 +71,7 @@ class MyAPI extends API
             else
             if ($action == "add") // ADD POST
             {
-                if( empty($_POST["postTitle"]) || empty($_POST["postAuthor"]) || empty($_POST["postDate"]) || empty($_POST["postContent"]))
+                if( empty($_POST["postTitle"]) && empty($_POST["postAuthor"]) && empty($_POST["postDate"]) && empty($_POST["postContent"]))
                 {
                     return array(
                         'data' => array("message" => "Mandatory Parameter is Missing"),

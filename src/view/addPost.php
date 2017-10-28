@@ -28,7 +28,7 @@
                           <strong>Add New Post</strong>
                         </div>
                         <div class="card-body">
-                          <form action="" id="addPost" method="post" enctype="multipart/form-data" class="form-horizontal">
+                          <form action="addPost" id="addPost" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label">Blog Author</label>
                               <div class="col-md-9">
@@ -39,7 +39,7 @@
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label" for="text-input">Post Title</label>
                               <div class="col-md-9">
-                                <input type="text" id="postTitle" name="text-input" class="form-control" placeholder="Post Title">
+                                <input type="text" id="postTitle" name="postTitle" class="form-control" placeholder="Post Title">
                               <div id="feedbackPostTitle" class="invalid-feedback hidden">
                                   Invalid input
                                 </div>
@@ -51,13 +51,13 @@
                               <div class="col-md-9">
                                   <div class="row">
                                     <div class="form-group col-sm-3">
-                                        <input type="date" style="length:50%" id="postDate" min="<?php echo date('Y-m-d')?>" name="text-input" class="form-control" value="<?php echo date('Y-m-d');?>" placeholder="Date">
+                                        <input type="date" style="length:50%" name="postDate" id="postDate" min="<?php echo date('Y-m-d')?>"  class="form-control" value="<?php echo date('Y-m-d');?>" placeholder="Date">
                                         <div id="feedbackPostDate" class="invalid-feedback hidden">
                                           Invalid input
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-2">
-                                        <input type="time" id="postTime" name="text-input" class="form-control" min = "<?php date_default_timezone_set("Asia/Bangkok"); echo date('H:i:s');?>" placeholder="Time" value="<?php  echo date('H:i');?>">
+                                        <input type="time" id="postTime" name="postTime" class="form-control" min = "<?php date_default_timezone_set("Asia/Bangkok"); echo date('H:i:s');?>" placeholder="Time" value="<?php  echo date('H:i');?>">
                                         <div id="feedbackPostTime" class="invalid-feedback hidden">
                                           Invalid input
                                         </div>
@@ -68,7 +68,7 @@
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label" for="textarea-input">Content</label>
                               <div class="col-md-9">
-                                <textarea id="postContent" name="textarea-input" rows="9" class="form-control" placeholder="Content.."></textarea>
+                                <textarea id="postContent" name="postContent" rows="9" class="form-control" placeholder="Content.."></textarea>
                                 <div id="feedbackPostContent" class="invalid-feedback hidden">
                                   Invalid input
                                 </div>
@@ -174,8 +174,9 @@
             valid = false;
         }
         
-        if(valid) {            
-            $.ajax({
+        if(valid) { 
+            $("form#addPost").submit();
+            /*$.ajax({
                 type : 'POST',
                 url : "<?php echo API_URL;?>api/v1/posts/add",           
                 data: {
@@ -191,7 +192,8 @@
                 fail:function(data) {
                     console.log("error");
                 }
-            });     
+            });   
+            */
 
         }
         

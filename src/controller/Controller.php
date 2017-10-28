@@ -56,6 +56,9 @@ class Controller {
                         case "newpost" :
                             $this->addNewPost();
                             break;
+                        case "addPost" :
+                            $this->addPost();
+                            break;
                         case "editpost" :
                             if( !isset($_GET['postId'])) {
                                $this->showUserDashboard();
@@ -103,6 +106,7 @@ class Controller {
         $_SESSION['user'] = array('temp');
         $_SESSION['user_name'] = "Tara Basro";
         $_SESSION['user_username'] = "sadasdsa";
+        $_SESSION['username'] = "sadasdsa";
         echo '<script>window.location.replace("index.php");</script>';
 	}
     
@@ -149,9 +153,39 @@ class Controller {
         include "src/view/addPost.php";
     }
     
-    public function editPost() {
+    function httpPost($url, $data)
+    {
+          $ch = curl_init($url);
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");  
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+          curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
+          $result = curl_exec($ch);
+          curl_close($ch);  
+          return $result;
+    }
+
+    
+    public function addPost() {
+        $url = API_URL . 'api/v1/posts/add';
+        $data = array(
+            'postTitle' => $_POST['postTitle'],
+            'postAuthor' => $_POST['postAuthor'],
+            'postDate' => $_POST['postDate'] . " " . $_POST['postTime'],
+            'postContent' => $_POST['postContent']
+        );
+        
+        $result = json_decode($this->httpPost($url, $data));
+        if($result->message=="Success") {
+           echo '<script>window.location.replace("index.php");</script>';
+        }
+    }
+    
+    public function editPost($postId) {
         include "src/view/editPost.php";
     }
+    
+
     
     public function showBlog($author, $postId = "") {
         $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $author . "/" . $postId));
