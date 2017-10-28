@@ -31,7 +31,7 @@
                     <div class="col-lg-12">
                       <div class="card">
                         <div class="card-header">
-                          <i class="fa fa-align-justify"></i> List Post. Author: Tara Basro (<a href="blog/">View Blog</a>)
+                          <i class="fa fa-align-justify"></i> List Post (<a href="blog/">View Blog</a>)
                         </div>
                         <div class="card-body">
                           <table class="table" id="example">
@@ -52,7 +52,7 @@
                                 <td>
                                     <a href="blog/<?php echo $d->postAuthor."/".$d->postId; ?>"><span class="badge badge-success">View Post</span></a>&nbsp;
                                     <a href="editpost?postId=<?php echo $d->postId?>"><span class="badge badge-warning">Edit</span></a>&nbsp;
-                                    <a href="#"><span class="badge badge-danger" data-toggle="modal" data-target="#smallModal">Delete</span></a>
+                                    <a href="#" onclick='confirmdelete(<?php echo $d->postId?>, "<?php echo $d->postAuthor?>")'><span class="badge badge-danger" data-toggle="modal">Delete</span></a>
                                 </td>
                               </tr>
                                 <?php
@@ -91,7 +91,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>You are going to remove post. Removed project CANNOT be restored! Are you ABSOLUTELY sure?</p>
+        <p>Are you sure want to delete the post?</p>
+        <p>Apakah Anda yakin menghapus post ini?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger">Confirm</button>
@@ -119,16 +120,26 @@
     include "_templates/_footer.php";
 ?>
 
-<!--
-<script type="text/javascript">
-    var $ = jQuery;
 
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "processing": true,
-        "serverSide": true,
-        "ajax": "http://localhost:8888/MiniBlog/api/v1/posts/jeje"
-    } );
-} );
+<script type="text/javascript">
+    function confirmdelete(id, author) {
+       var result = confirm("Apakah Anda yakiin menghapus post ini?");
+        if (result) {
+            $.ajax({
+                type : 'POST',
+                url : "<?php echo API_URL;?>api/v1/posts/delete",           
+                data: {
+                    postId : id,
+                    postAuthor : author,
+                },
+                success:function (data) {
+                    location.reload();                
+                },
+                fail:function(data) {
+                    console.log("error");
+                }
+            }); 
+        }
+
+   }
 </script>
--->
