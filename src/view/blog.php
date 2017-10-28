@@ -24,8 +24,8 @@
                         <div class="card card-accent-info" style="margin-top:40px">
                             <div class="card-header">
                                 <a href="<?php echo API_URL . "blog/" . $d->postAuthor . "/" . $d->postId ;?>"><h3><?php echo $d->postTitle; ?></h3></a><span>Posted by <b><?php echo $d->postAuthor; ?></b> at <?php echo $d->postDate?></span>
-                                <span class="badge badge-danger float-right">Delete</span>&nbsp;&nbsp;
-                                <span class="badge badge-warning float-right">Edit</span>
+                                <a href="#" onclick='confirmdelete(<?php echo $d->postId?>, "<?php echo $d->postAuthor?>")'><span class="badge badge-danger float-right launch-confirm" data-toggle="modal"   >Delete</span></a>&nbsp;&nbsp;
+                                <a href="<?php echo API_URL?>editpost/<?php echo $d->postAuthor; ?>/<?php echo $d->postId?>"><span class="badge badge-warning float-right">Edit</span></a>
                             </div>
                             <div class="card-body">
                                 <p> <?php echo $d->postContent; ?></p>
@@ -157,6 +157,29 @@
         <span> © Kelompok-4 IF5192 Secure Programming 2017</span>
       </footer>
 
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation required</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete the post?</p>
+        <p><i>Apakah Anda yakin menghapus post ini?</i></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="">Confirm</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>    
+    
 </body>
 
 <?php
@@ -165,9 +188,43 @@
 
 
 <script type="text/javascript">
+    
+    
+   function confirmdelete(id, author) {
+       var result = confirm("Apakah Anda yakiin menghapus post ini?");
+        if (result) {
+            $.ajax({
+                type : 'POST',
+                url : "<?php echo API_URL;?>api/v1/posts/delete",           
+                data: {
+                    postId : id,
+                    postAuthor : author,
+                },
+                success:function (data) {
+                    location.reload();                
+                },
+                fail:function(data) {
+                    console.log("error");
+                }
+            }); 
+        }
+
+   }
+    
     $(document).ready(function() {
-       reloadComment(); 
+        <?php
+        if(isset($postId)) {
+    ?>
+        reloadComment(); 
+        <?php
+        }
+       ?>
     });
+    
+    function showConfirmation(id) {
+        $('#smallModal').show(); 
+        $('#smallModal').addClass('show'); 
+    }
     
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
