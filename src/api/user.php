@@ -78,10 +78,34 @@
 				$response = array('data'=>$return,'error_code'=>1001,'status'=>200);				
 			}
 		}	
+		else if($action == 'getuser')
+		{
+			$get = $user_model->check_session($username,$session_id);
+			$get = true;
+			if(!empty($get))
+			{			
+				$check = $user_model->get_user();
+				if(!empty($check))
+				{
+					$return = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),json_encode($check));
+					$response = array('data'=> array('data'=>$return,'error_code'=>0),'status'=>200);			
+				}
+				else
+				{
+					$return = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),json_encode(null,true));
+					$response = array('data'=> array('data'=>$return,'error_code'=>1003),'status'=>200);				
+				}
+			}
+			else
+			{
+				$return = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),json_encode(null,true));
+				$response = array('data'=>array('data'=>$return,'error_code'=>1001),'status'=>200);				
+			}
+		}	
 		else
 		{
 			$return = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),json_encode(null,true));
-			$response = array('data'=> array('data'=>$return,'error_code'=>10011),'status'=>200);
+			$response = array('data'=> array('data'=>$return,'error_code'=>10010),'status'=>200);
 		}
 	}
 	else

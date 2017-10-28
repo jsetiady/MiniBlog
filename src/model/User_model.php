@@ -95,5 +95,27 @@ class User_Model
 			}
 		}
 	}	
+
+	function get_user()
+	{
+		$link = Connection::getCon();	 
+		$sql = "SELECT username, name, email, role FROM user";
+		$result = mysqli_query($link,$sql);	 
+		$i=0;
+		while($row=mysqli_fetch_assoc($result)) {
+			$resultset[$i] = $row;
+			$i++;
+		}
+
+		if(!empty($resultset))
+		{
+		    // return mysqli_fetch_object($result);
+		    return $resultset;
+		}
+		else 
+		{
+		    return null;
+		}
+	}
 }
 ?>

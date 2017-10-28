@@ -53,8 +53,48 @@ class Controller {
                             break;
                         case "changepassword" :
                             $checksession = $this->checkSession();
+                            $checksession = true;
+                            if(!$checksession) {
+                               $this->showUserDashboard();
+                            } else {                                
+                                if(!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['renew_password']))
+                                {
+                                    $check = $this->changePassword();
+                                    if($check)
+                                    {
+                                        echo '<script>window.alert("Success to change password");</script>';
+                                        echo '<script>window.location.replace("index.php");</script>';                                      
+                                    }
+                                    else
+                                    {
+                                        echo '<script>window.alert("Failed to change password");</script>';
+                                        echo '<script>window.location.replace("index.php");</script>';                                      
+                                    }
+                                }
+                                $this->showChangePassword();                                    
+                            }
+                            break;                          
+                        case "logout":
+                            session_unset();
+                            session_destroy();
+                            echo '<script>window.location.replace("index.php");</script>';
+                            break;
+                    }
+                    
+                    
+                } else {
+                    switch ($module) {
+                        case "home": 
+                            $this->getuser();
+                            break;
+                        case "logout":
+                            session_unset();
+                            session_destroy();
+                            echo '<script>window.location.replace("index.php");</script>';
+                            break;
+                        case "changepassword" :
+                            $checksession = $this->checkSession();
                             if( !$checksession) {
-
                                $this->showUserDashboard();
                             } else {                                
                                 if(!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['renew_password']))
@@ -73,18 +113,9 @@ class Controller {
                                 }
                                 $this->showChangePassword();
                             }
-                            break;                          
-                        case "logout":
-                            session_unset();
-                            session_destroy();
-                            echo '<script>window.location.replace("index.php");</script>';
-                            break;
+                            break; 
                     }
                     
-                    
-                } else {
-                    
-                    $this->showAdminDashboard();
                 }
             }
         }
@@ -136,7 +167,7 @@ class Controller {
         echo '<script>window.location.replace("index.php");</script>';
     }
     
-    public function checkSession($redirectVal = "false")
+   public function checkSession($redirectVal = "false")
     {
         include("lib/security_lib.php");    
         $securitylib = new Security_Lib();
@@ -186,6 +217,51 @@ class Controller {
         $return = json_decode($getpostdata,true);
         return $return;
     }   
+
+    public function getuser($redirectVal = "false")
+    {
+        include("lib/security_lib.php");
+        $securitylib = new Security_Lib();
+        $username = $_SESSION['username'];
+        $session_id = $_SESSION['session_id'];      
+        $role = $_SESSION['role'];
+        $data = json_encode(array('action'=>'getuser','username'=>'henrijes','session_id'=>'ce66cf7c3a11290100d4b9d2e4eec625'),true);
+        $encryptdata = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$data);
+        $getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
+        $postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
+        $jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
+        $url = API_URL . "user/";    
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $decode = json_decode($response,true);
+        $getdecodeddata = $decode['data'];  
+        $getpostdata = $securitylib->decryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),$getdecodeddata);
+        $arr = json_decode($getpostdata,true);
+        $arr = array_chunk($arr, 10, true);
+        
+       $pg = $_GET['page'];
+       if( empty($pg))
+        {
+            $data = $arr[0];
+            $pg = 1;
+        }
+        else {
+            if((int)$pg > count($arr))
+            {
+                $data = $arr[0];
+            }
+            else
+            {
+                $data = $arr[ ((int) $pg)-1];
+            }
+        }
+        $page = count($arr);
+        include "src/view/dashboardAdmin.php";
+    }  
     
     
     //register page
