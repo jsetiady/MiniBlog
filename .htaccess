@@ -3,4 +3,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^((?!api|public).)*$ index.php?module=$0 [QSA,NC,L]
 RewriteRule api/v1/(.*)$ src/api/api.php?request=$1 [QSA,NC,L]
-RewriteRule api/v2/(.*)$ connector.php?code=$1 [QSA,NC,L]
+RewriteRule api/v2/(.*)$ src/api/connector.php?code=$1 [QSA,NC,L]
