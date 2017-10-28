@@ -81,7 +81,7 @@
 		else
 		{
 			$return = $securitylib->encryptdata($securitylib->encrypt_key(),$securitylib->secret_iv(),json_encode(null,true));
-			$response = array('data'=> array('data'=>$return,'error_code'=>10011),'status'=>200);
+			$response = array('data'=> array('data'=>$return,'error_code'=>10010),'status'=>200);
 		}
 	}
 	else

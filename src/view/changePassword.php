@@ -28,7 +28,7 @@
                           <strong>Change Password</strong>
                         </div>
                         <div class="card-body">
-                          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal" action="user/changepassword">
+                          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal" action="changepassword">
                             <div class="form-group row">
                               <label class="col-md-3 form-control-label">username</label>
                               <div class="col-md-9">
