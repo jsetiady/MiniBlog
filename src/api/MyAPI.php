@@ -189,7 +189,7 @@ class MyAPI extends API
         else
         if ($this->method == 'POST')
         {
-            if( !isset($_POST['postId']) || !isset($_POST['username']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
+            if( !isset($_POST['postId']) || !isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['comment']) || !isset($_POST['commentDate'])) {
                 return array(
                     'data' => array("message" => "Method not allowed"),
                     'status' => 405
