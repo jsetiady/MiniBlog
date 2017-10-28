@@ -20,6 +20,13 @@ class MyAPI extends API
     /**
      * Endpoint
      */
+	 protected function user()
+	 {
+		 include ('user.php');
+         return $response;
+	 }
+	 
+	 
     protected function posts()
     {
         if ($this->method == 'GET')
