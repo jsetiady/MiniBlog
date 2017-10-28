@@ -1,5 +1,5 @@
-<?php
-
+<?php 
+	
 class Comment {
 	private $commentId;
     private $postId;
@@ -20,13 +20,6 @@ class Comment {
         $this->commentDate = $commentDate;
     }
 
-    public static function create() 
-    {
-    	$instance = new self();
-    	return $instance;
-    }
-
-
     public function toArray() {
         $util = new Util();
         return $util->utf8ize(array(
@@ -39,7 +32,5 @@ class Comment {
             "commentDate" => $this->commentDate,
         ));
     }
-    
 }
-
 ?>

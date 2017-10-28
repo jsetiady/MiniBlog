@@ -69,6 +69,49 @@ class CommentModel {
         $stmt->close();
         return $return;
     }
+    
+    function addcomment($name,$email,$comment,$post_id)
+	{
+		$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
+		mysqli_set_charset($link,'utf8');	 
+		$date = date("Y-m-d H:i:s");
+		$username = "guest";
+
+		$sql = "INSERT INTO comment (post_id, username, name, email, comment, date) VALUES($post_id,'$username','$name','$email','$comment','$date')";	 
+		$result = mysqli_query($link,$sql);
+		if ($result) 
+		{
+			return  "comment created!";
+		} 
+		else
+		{		
+			return null;			
+		}
+
+	}
+
+	function getcomment($post_id) {
+		$link = mysqli_connect('us-cdbr-iron-east-05.cleardb.net', 'b2c5ed21dfce0a', '6a04153a', 'heroku_ed26df38dd95e64');
+		mysqli_set_charset($link,'utf8');	
+		$sql = "SELECT name, date, comment FROM comment WHERE post_id='$post_id'";
+		$result = mysqli_query($link,$sql);	 
+		
+		$i=0;
+		while($row=mysqli_fetch_assoc($result)) {
+			$resultset[$i] = $row;
+			$i++;
+		}
+
+		if(!empty($resultset))
+		{
+		    // return mysqli_fetch_object($result);
+		    return $resultset;
+		}
+		else 
+		{
+		    return null;
+		}
+	}
 
 }
 
