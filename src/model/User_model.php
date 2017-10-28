@@ -1,5 +1,4 @@
 <?php
-include("Database_Model.php");
 class User_Model
 {	
 	function GetTable()
@@ -9,18 +8,32 @@ class User_Model
 
 	function login($username,$password)
 	{
-		$link = Connection::getCon();
-		$password = md5($password);
-		$sql = "SELECT name,role FROM ".$this->GetTable()." WHERE username='$username' AND password='$password'";	 
-		$result = mysqli_query($link,$sql);	 
-		if (!$result) 
-		{
-			return array();
-		} 
-		else
-		{		
-			return mysqli_fetch_object($result);			
-		}
+        
+        $mysqli = Connection::getCon();
+
+        $sql = "SELECT name, role FROM ".$this->GetTable()." WHERE username= ? AND password= md5( ? ) ";	 
+
+        if (!($stmt = $mysqli->prepare($sql))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+        }
+        $s = "21dbd9ee5a8e54ec3157e76b32ce450c";
+
+        if (!$stmt->bind_param("ss", $username,$password)) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmt->execute()) {
+             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        
+        if (!($res = $stmt->get_result())) {
+            echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        $results = $res->fetch_object();
+        return $results;
+        
+        
 	}
 
 	function update_session($username,$session_id)

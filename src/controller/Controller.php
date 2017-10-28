@@ -347,7 +347,7 @@ class Controller {
         $url = API_URL . 'api/v1/posts/add';
         $data = array(
             'postTitle' => $_POST['postTitle'],
-            'postAuthor' => $_POST['postAuthor'],
+            'postAuthor' => $_SESSION['username'],
             'postDate' => $_POST['postDate'] . " " . $_POST['postTime'],
             'postContent' => $_POST['postContent']
         );
@@ -382,7 +382,11 @@ class Controller {
         $result = json_decode($this->httpPost($url, $data));
         
         if($result->message->affected_row==1) {
-           echo '<script>window.location.replace('.API_URL .'"index.php");</script>';
+            if($_GET["blog"]==1) {
+                echo '<script>window.location.replace("'.API_URL .'blog");</script>';
+            } else {
+                echo '<script>window.location.replace("'.API_URL .'");</script>';
+            }
         }
     }
     

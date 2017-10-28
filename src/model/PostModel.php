@@ -4,25 +4,10 @@ include_once("Post.php");
 
 class PostModel {
 	
-	public function getAllPosts() 
-    {
-        $allPost = array();
-        // prepare and bind
-        $sql = "SELECT post_id, post_title, post_author, post_content, post_date FROM post";
-    	$resSql = mysqli_query(Connection::getCon(),$sql);
-
-    	while($row = mysqli_fetch_assoc($resSql))
-    	{
-    		array_push($allPost, $row);
-    	}
-
-    	return $allPost;
-    }
-
     public function getAllPostsByAuthor($author) {
         $mysqli = Connection::getCon();
 
-        $sql = "SELECT post_id, post_title, post_author, post_content, post_date FROM post WHERE post_author = ? ORDER BY post_id ASC";
+        $sql = "SELECT post_id, post_title, post_author, post_content, post_date FROM post WHERE post_author = ? ORDER BY post_id DESC";
 
         if (!($stmt = $mysqli->prepare($sql))) {
             echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;

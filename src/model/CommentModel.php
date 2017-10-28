@@ -7,7 +7,7 @@ class CommentModel {
     public function getAllCommentsByPostId($postId) {
         $mysqli = Connection::getCon();
 
-        $sql = "SELECT comment_id, post_id, username, name, email, comment, comment_date FROM comment WHERE post_id = ? ORDER BY comment_id ASC";
+        $sql = "SELECT comment_id, post_id, username, name, email, comment, comment_date FROM comment WHERE post_id = ? ORDER BY comment_id DESC";
 
         if (!($stmt = $mysqli->prepare($sql))) {
             echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;

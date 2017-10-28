@@ -25,7 +25,7 @@
                     <div class="col-md-12">
                       <div class="card">
                         <div class="card-header">
-                          <strong>Edit New Post</strong>
+                          <strong>Edit Post</strong>
                         </div>
                         <div class="card-body">
                           <form action="updatePost" id="editPost" method="post" enctype="multipart/form-data" class="form-horizontal">
