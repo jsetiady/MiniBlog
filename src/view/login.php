@@ -11,22 +11,26 @@
             <div class="card-body">
               <h1>Login</h1>
               <p class="text-muted">Sign In to your account</p>
+            <form method="POST" action="validatelogin">
               <div class="input-group mb-3">
                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                <input type="text" class="form-control" placeholder="Username">
+                <input type="text" class="form-control" placeholder="Username" name="username">
               </div>
               <div class="input-group mb-4">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Password" name="password">
               </div>
               <div class="row">
                 <div class="col-6">
-                  <a href="validatelogin"><button type="button" class="btn btn-primary px-4">Login</button></a>
+                    <a href="validatelogin"><button type="button" class="btn btn-primary px-4">Login</button></a>
+
                 </div>
+        
                 <div class="col-6 text-right">
                     <a href="forgotpassword"><button type="button" class="btn btn-link px-0">Forgot password?</button></a>
                 </div>
               </div>
+            </form>
             </div>
           </div>
           <div class="card text-white bg-primary py-5 " style="width:44%">
