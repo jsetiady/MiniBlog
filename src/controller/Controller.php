@@ -185,9 +185,16 @@ class Controller {
     }
     
     public function editPost($postId) {
-        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $_SESSION["username"] ."/" .$postId));
+        $result = file_get_contents( API_URL . "api/v1/posts/" . $_SESSION["username"] ."/" .$postId);
+        
+        $arr = json_decode($result);
         $data = $arr[0];
-        include "src/view/editPost.php";
+        if( $_SESSION['username'] != $data->postAuthor ) {
+            echo '<script>window.location.replace("index.php");</script>';
+        } else {
+            include "src/view/editPost.php";
+        }
+        
     }
     
     public function updatePost() {
