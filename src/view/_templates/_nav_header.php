@@ -2,7 +2,7 @@
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand">SimpleBlog Kelompok-4</a>
+    <a class="navbar-brand" style="background-size:120px auto"></a>
         
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown">
