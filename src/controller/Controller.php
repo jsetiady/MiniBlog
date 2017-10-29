@@ -201,7 +201,7 @@ class Controller {
         $getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
         $postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
         $jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
-        $url = API_URL . "user/";    
+        $url = API_URL . "api/v1/user/";    
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
@@ -227,7 +227,7 @@ class Controller {
         $getchecksum = $securitylib->generate_checksum($encryptdata.$securitylib->checksum_salt(),$securitylib->secret_key());
         $postdata = json_encode(array('post_data'=>$encryptdata,'checksum'=>$getchecksum),true);
         $jsondata = $securitylib->encryptdata($securitylib->secret_key(),$securitylib->secret_iv(),$postdata);
-        $url = API_URL . "user/";    
+        $url = API_URL . "api/v1/user/";    
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, array('data'=>$jsondata));
@@ -341,7 +341,7 @@ class Controller {
           curl_close($ch);  
           return $result;
     }
-
+    
     
     public function addPost() {
         $url = API_URL . 'api/v1/posts/add';
@@ -380,14 +380,13 @@ class Controller {
             'postContent' => $_POST['postContent']
         );
         $result = json_decode($this->httpPost($url, $data));
-        
-        if($result->message->affected_row==1) {
+        if($result->message->affected_row==1 || $result->message->affected_row!=1) {
             if($_GET["blog"]==1) {
                 echo '<script>window.location.replace("'.API_URL .'blog");</script>';
             } else {
                 echo '<script>window.location.replace("'.API_URL .'");</script>';
             }
-        }
+        } 
     }
     
     public function deletePost() {
