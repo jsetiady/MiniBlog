@@ -90,7 +90,10 @@ class MyAPI extends API
                             array(
                                 "message" => $this->PostModel->addNewPost(
                                     array(
-                                        "postTitle" => $_POST["postTitle"], "postAuthor" => $_POST["postAuthor"], "postDate" => $_POST["postDate"], "postContent" => $_POST["postContent"]
+                                        "postTitle" => $this->sanitize($_POST["postTitle"]),
+                                        "postAuthor" => $this->sanitize($_POST["postAuthor"]),
+                                        "postDate" => $this->sanitize($_POST["postDate"]),
+                                        "postContent" => $this->sanitize($_POST["postContent"])
                                     )
                                 ),
                             ),
@@ -108,23 +111,23 @@ class MyAPI extends API
                     );
                 } else {
                     $data = array(
-                        "postId" => $_POST["postId"],
-                        "postAuthor" => $_POST["postAuthor"]
+                        "postId" => $this->sanitize($_POST["postId"]),
+                        "postAuthor" => $this->sanitize($_POST["postAuthor"])
                     );
                     
                     if( !empty($_POST['postTitle']))
                     {
-                        $data["postTitle"] = $_POST['postTitle'];
+                        $data["postTitle"] = $this->sanitize($_POST['postTitle']);
                     }
                     
                     if( !empty($_POST['postDate']))
                     {
-                        $data["postDate"] = $_POST['postDate'];
+                        $data["postDate"] = $this->sanitize($_POST['postDate']);
                     }
                     
                     if( !empty($_POST['postContent']))
                     {
-                        $data["postContent"] = $_POST['postContent'];
+                        $data["postContent"] = $this->sanitize($_POST['postContent']);
                     }
                     
                     return array(
@@ -209,11 +212,11 @@ class MyAPI extends API
                             array(
                                 "message" => $this->CommentModel->addNewComment(
                                     array(
-                                        "postId" => $_POST["postId"],
-                                        "username" => $_POST["username"],
-                                        "name" => $_POST["name"],
-                                        "email" => $_POST["email"],
-                                        "comment" => $_POST["comment"],
+                                        "postId" => $this->sanitize($_POST["postId"]),
+                                        "username" => $this->sanitize($_POST["username"]),
+                                        "name" => $this->sanitize($_POST["name"]),
+                                        "email" => $this->sanitize($_POST["email"]),
+                                        "comment" => $this->sanitize($_POST["comment"]),
                                         "commentDate" => date('Y-m-d H:i:s')
                                     )
                                 ),
@@ -228,5 +231,10 @@ class MyAPI extends API
                 'status' => 405
             );
         }
+    }
+    
+    function sanitize($input)
+    {
+        return filter_var($input, FILTER_SANITIZE_STRING);
     }
  }
