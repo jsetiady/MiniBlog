@@ -34,7 +34,11 @@ class MyAPI extends API
             $args = $_GET['request'];
             $args = explode("/", $args);
             $author = $args[1];
+if(isset($args[2])) {
             $id = $args[2];
+} else {
+$id = "";
+}
 
             if( empty($author) )
             {
