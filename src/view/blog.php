@@ -20,30 +20,16 @@
                 <div class="row">
                     <div class="col-md-9">
                         
+                        <?php foreach($data as $d): ?>
+                             <?php include 'blog_content.php'; ?>
+                            <?php include 'blog_comment.php'; ?>
+                        <?php endforeach; ?>
                         
-                        
+                        <?php include 'blog_emptypost.php'; ?>
+                        <?php include 'blog_paging.php'; ?>
                     </div>
                     
-                    <?php
-                        if (!empty($data))
-                        {
-                    ?>
-                        <div class="col-md-3">
-                            <div class="card card-accent-info" style="margin-top:40px">
-                                <div class="card-header">
-                                  Blog Author
-                                </div>
-                                <div class="card-body">
-                                    <div class="input-group mb-3">
-                                      <span class="input-group-addon">@</span>
-                                      <input style="background-color:#FFF" type="text" class="form-control" disabled placeholder="Username" value="<?php echo $data[0]->postAuthor; ?>">
-                                    </div>
-                                </div>
-                              </div>
-                        </div>
-                        <?
-                        }
-                        ?>
+                   <?php include 'blog_author.php'; ?>
                     
                     
                 </div>
