@@ -21,7 +21,7 @@ class PostModel {
              echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
         }
 
-        if (!($res = $stmt->get_result())) {
+	if (!($res = $stmt->get_result())) {
             echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
         }
 

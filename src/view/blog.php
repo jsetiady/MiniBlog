@@ -21,134 +21,15 @@
                     <div class="col-md-9">
                         
                         <?php foreach($data as $d): ?>
-                        <div class="card card-accent-info" style="margin-top:40px">
-                            <div class="card-header">
-                                <a href="<?php echo API_URL . "blog/" . $d->postAuthor . "/" . $d->postId ;?>"><h3><?php echo $d->postTitle; ?></h3></a><span>Posted by <b><?php echo $d->postAuthor; ?></b> at <?php echo $d->postDate?></span>
-                                <?php if ($_SESSION['username'] == $d->postAuthor) { ?>
-                                <a href="#" onclick='confirmdelete(<?php echo $d->postId?>, "<?php echo $d->postAuthor?>")'><span class="badge badge-danger float-right launch-confirm" data-toggle="modal"   >Delete</span></a>&nbsp;&nbsp;
-                                <a href="<?php echo API_URL?>editpost?postId=<?php echo $d->postId?>&blog=1"><span class="badge badge-warning float-right">Edit</span></a>
-                                <form method="post" action="<?php echo API_URL?>deletePost" id="delete<?php echo $d->postId;?>">
-                                    <input type="hidden" name="postAuthor" value="<?php echo $d->postAuthor; ?>"/>
-                                    <input type="hidden" name="postId" value="<?php echo $d->postId;?>"/>
-                                    <input type="hidden" name="back" value="blog"/>
-                                </form>
-                                <?php } ?>
-                            </div>
-                            <div class="card-body">
-                                <p> <?php echo $d->postContent; ?></p>
-                                <?php if(!isset($postId)) { ?><a href="<?php echo API_URL . "blog/" . $d->postAuthor . "/" . $d->postId ;?>" class="float-right">View Comment(s)</a> <?php } ?>
-                            </div>
-                         </div>
-                        <?php
-                                if(isset($postId)) {
-                                ?>
-                                        <div class="card ">
-                                            <div class="card-body">
-                                                <h4>Comment</h4>
-                                                <div id="commentSection">
-                                                    <div class="row">
-                                                        <div class="col-md-3">0 comment</div>
-                                                    </div><br/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                        
-                                      <div class="card">
-                                        <div class="card-body">
-                                            <h4>Add comment</h4>
-                                                <form id="commentForm" method="post" >
-                                                    <div class="form-group row">
-                                                      <label class="col-md-3 form-control-label" for="addCommentName">Name</label>
-                                                      <div class="col-md-9">
-                                                        <input type="text" id="addCommentName" name="name" class="form-control" placeholder="Enter Name..">
-                                                        <div id="feedbackAddCommentName" class="invalid-feedback hidden">
-                                                          Invalid name
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                      <label class="col-md-3 form-control-label" for="addCommentEmail">Email</label>
-                                                      <div class="col-md-9">
-                                                        <input type="email" id="addCommentEmail" name="email" class="form-control" placeholder="Enter Email..">
-                                                        <div id="feedbackAddCommentEmail" class="invalid-feedback hidden">
-                                                          Invalid email
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-md-3 form-control-label" for="addCommentComment">Comment</label>
-                                                        <div class="col-md-9">
-                                                          <textarea id="addCommentComment" name="comment" rows="9" class="form-control" placeholder="Content.."></textarea>
-                                                          <div id="feedbackAddCommentComment" class="invalid-feedback hidden">
-                                                          Input invalid
-                                                          </div>
-                                                          <input type="hidden" id="addCommentDate" name="commentDate" />
-                                                          <input type="hidden" id="addCommentPostId" name="postId" />
-                                                      </div>
-                                                    </div>
-                                                </form>
-                                        </div>
-                                        <div class="card-footer">
-                                          <button id="addComment" type="submit" class="btn btn-sm btn-primary float-right"><i class="fa fa-dot-circle-o"></i> Add comment</button>
-                                        </div>
-                                      </div>
-                        
-                                    
-                                <?php
-                                } 
-                                ?>
+                             <?php include 'blog_content.php'; ?>
+                            <?php include 'blog_comment.php'; ?>
                         <?php endforeach; ?>
                         
-                        <?php
-                        if (empty($data))
-                        {
-                        ?>
-                       
-                        <div class="card card" style="margin-top:40px">
-                            <div class="card-body">
-                              No post found.
-                            </div>
-                        </div>
-                        <?
-                        }
-                        ?>
-                        
-                        <?php if(!isset($postId)) { ?>
-                        <ul class="pagination">
-                              <?php
-                              for($i=0;$i<$page;$i++) {
-                                  ?>
-                            <li class="page-item <?php if($i==($pg-1)) { echo "active"; } ?>">
-                              <a class="page-link" href="?page=<?php echo $i+1; ?>"><?php echo $i+1; ?></a>
-                            </li>
-                              <?php
-                              }
-                                ?>
-                          </ul>
-                        <?php } ?>
+                        <?php include 'blog_emptypost.php'; ?>
+                        <?php include 'blog_paging.php'; ?>
                     </div>
                     
-                    <?php
-                        if (!empty($data))
-                        {
-                    ?>
-                        <div class="col-md-3">
-                            <div class="card card-accent-info" style="margin-top:40px">
-                                <div class="card-header">
-                                  Blog Author
-                                </div>
-                                <div class="card-body">
-                                    <div class="input-group mb-3">
-                                      <span class="input-group-addon">@</span>
-                                      <input style="background-color:#FFF" type="text" class="form-control" disabled placeholder="Username" value="<?php echo $data[0]->postAuthor; ?>">
-                                    </div>
-                                </div>
-                              </div>
-                        </div>
-                        <?
-                        }
-                        ?>
+                   <?php include 'blog_author.php'; ?>
                     
                     
                 </div>
