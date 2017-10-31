@@ -20,10 +20,21 @@ class PostModel {
         if (!$stmt->execute()) {
              echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
         }
+        
+        $stmt->bind_result($postId, $postTitle, $postAuthor, $postContent, $postDate);
+        
+        $posts = array();
+        while ($stmt->fetch()) {
+            $post = new Post($postId, $postTitle, $postAuthor, $postContent, $postDate);
+            array_push($posts, $post);
+        }
+        $posts = $util->objectsToArray($posts);
 
+        /*
         if (!($res = $stmt->get_result())) {
             echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
         }
+        
 
         $results = $res->fetch_all();
         $posts = array();
@@ -33,6 +44,7 @@ class PostModel {
             array_push($posts, $post);
         }
         $posts = $util->objectsToArray($posts);
+        */
         return $posts;
     }
 
