@@ -102,7 +102,7 @@ class User_Model
         $stmt->close();
     
 		if($return){    
-	        $sql = "UPDATE ".$this->GetTable()." SET password = ? where username=?";
+	        $sql = "UPDATE ".$this->GetTable()." SET password = sha2(?, 256) where username=?";
 
 	        if (!($stmt = $mysqli->prepare($sql))) {
 	            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
