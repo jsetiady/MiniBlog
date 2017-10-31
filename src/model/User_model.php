@@ -99,10 +99,18 @@ class User_Model
             $return = true;
         }
 
+        if (!($res = $stmt->get_result())) {
+            $return = false;
+        } else{
+        	$return = true;
+        }
+
+        $results = $res->fetch_object();
+
         $stmt->close();
-    
-		if($return){    
-	        $sql = "UPDATE ".$this->GetTable()." SET password = ? where username=?";
+    	
+		if(!empty($results)){    
+	        $sql = "UPDATE ".$this->GetTable()." SET password = sha2(?, 256) where username= ?";
 
 	        if (!($stmt = $mysqli->prepare($sql))) {
 	            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -126,37 +134,6 @@ class User_Model
         }
         return $return;
 
-
-
-/*		$oldpassword = sha2() $oldpassword);
-		$newpassword = hash('sha256', $newpassword);		
-		$sql = "SELECT password FROM ".$this->GetTable()." where username='$username' AND password='$oldpassword'";	 
-		$result = mysqli_query($link,$sql);	 
-		if (!$result) 
-		{			
-			return false;
-		} 
-		else
-		{	
-			$get = mysqli_fetch_object($result);
-			if($get->password == $oldpassword)
-			{
-				$sql = "UPDATE ".$this->GetTable()." SET password = '$newpassword' where username='$username'";	 
-				$result = mysqli_query($link,$sql);	 
-				if (!$result) 
-				{
-					return false;
-				} 
-				else
-				{		
-					return true;
-				}	
-			}
-			else
-			{
-				return false;
-			}
-		}*/
 	}	
 
 	function get_user()
