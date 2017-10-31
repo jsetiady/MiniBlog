@@ -11,7 +11,7 @@ class User_Model
         
         $mysqli = Connection::getCon();
 
-        $sql = "SELECT name, role FROM ".$this->GetTable()." WHERE username= ? AND password= md5( ? ) ";	 
+        $sql = "SELECT name, role FROM ".$this->GetTable()." WHERE username= ? AND password= sha2( ?, 256 ) ";	 
 
         if (!($stmt = $mysqli->prepare($sql))) {
             echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -77,10 +77,60 @@ class User_Model
 	
 	function change_password($username,$oldpassword,$newpassword)
 	{
-		$link = Connection::getCon();	 
-		$oldpassword = md5($oldpassword);
-		$newpassword = md5($newpassword);		
-		$sql = "SELECT password FROM ".$this->GetTable()." where username='$username'";	 
+		$mysqli = Connection::getCon();	 
+        
+        $sql = "SELECT password FROM ".$this->GetTable()." where username= ? AND password= sha2(? , 256)";
+
+        if (!($stmt = $mysqli->prepare($sql))) {
+            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            $return = "Failed";
+        }
+
+        /* Prepared statement, stage 2: bind and execute */
+        $binding = $stmt->bind_param("ss", $username, $oldpassword);
+
+        if (!$binding) {
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+
+        if (!$stmt->execute()) {
+            $return = false;
+        } else {
+            $return = true;
+        }
+
+        $stmt->close();
+    
+		if($return){    
+	        $sql = "UPDATE ".$this->GetTable()." SET password = ? where username=?";
+
+	        if (!($stmt = $mysqli->prepare($sql))) {
+	            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+	            $return = "Failed";
+	        }
+
+	        /* Prepared statement, stage 2: bind and execute */
+	        $binding = $stmt->bind_param("ss", $newpassword, $username);
+
+	        if (!$binding) {
+	            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+	        }
+
+	        if (!$stmt->execute()) {
+	            $return = false;
+	        } else {
+	            $return = true;
+	        }
+        } else {
+        	$return = false;
+        }
+        return $return;
+
+
+
+/*		$oldpassword = sha2() $oldpassword);
+		$newpassword = hash('sha256', $newpassword);		
+		$sql = "SELECT password FROM ".$this->GetTable()." where username='$username' AND password='$oldpassword'";	 
 		$result = mysqli_query($link,$sql);	 
 		if (!$result) 
 		{			
@@ -106,7 +156,7 @@ class User_Model
 			{
 				return false;
 			}
-		}
+		}*/
 	}	
 
 	function get_user()
