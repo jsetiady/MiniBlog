@@ -1,5 +1,5 @@
  <?php
-    if (!empty($data))
+    if (!empty($_SESSION['author']))
     {
 ?>
     <div class="col-md-3">

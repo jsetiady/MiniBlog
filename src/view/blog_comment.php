@@ -1,5 +1,5 @@
 <?php
-    if(isset($postId)) {
+    if(!empty($postId) && !empty($author)) {
     ?>
             <div class="card ">
                 <div class="card-body">

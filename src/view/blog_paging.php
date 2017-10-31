@@ -1,4 +1,4 @@
-<?php if(!isset($postId)) { ?>
+<?php //if(!isset($postId)) { ?>
 <ul class="pagination">
       <?php
       for($i=0;$i<$page;$i++) {
@@ -10,4 +10,4 @@
       }
         ?>
   </ul>
-<?php } ?>
+<?php //} ?>

@@ -15,7 +15,7 @@
                 <strong>Account</strong>
               </div>
                 <?php if($_SESSION['role']=="1") { ?> 
-              <a class="dropdown-item" href="<?php echo API_URL;?>blog"><i class="fa fa-tasks"></i> View My Blog</a>
+              <a class="dropdown-item" href="<?php echo API_URL;?>blog/<?php echo $_SESSION['username'];?>"><i class="fa fa-tasks"></i> View My Blog</a>
                 <?php } ?>
               <a class="dropdown-item" href="<?php echo API_URL;?>changepassword"><i class="fa fa-wrench"></i> Change Password</a>
               <a class="dropdown-item" href="<?php echo API_URL;?>logout"><i class="fa fa-lock"></i> Logout</a>
@@ -25,7 +25,7 @@
         <span class="input-group-addon" style="border:0;background-color:#FFFFFF"><i class="fa fa-user"></i></span>
         <span class="input-group-addon" style="border:0;background-color:#FFFFFF"></span>
     <?php } else { ?>
-    <a href="<?php echo API_URL;?>" style="margin:100px"><button type="button" class="btn btn-primary px-4" >Login</button></a>
+    <a href="<?php echo API_URL;?>login" style="margin:100px"><button type="button" class="btn btn-primary px-4" >Login</button></a>
     <?php }  ?>
     
 

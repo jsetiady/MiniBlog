@@ -41,7 +41,14 @@ class Controller {
             
             if(empty($_SESSION['session_id']))
             {
-                $this->showBlog();
+                switch ($module) {
+                    case "login": 
+                        $this->showLogin();
+                        break;
+                    default: 
+                        $this->showBlog();
+                        break;
+                }
             }
             
             else
