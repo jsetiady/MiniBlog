@@ -11,6 +11,8 @@ class Controller {
     public function invoke($module)
     {        
         $args = explode("/", $module);
+        
+        
         if(!isset($_SESSION['session_id']) && $args[0] == "blog") {
             if($args[1]!="" && $args[1]!="index.php") {
                 $this->showBlog($args[1], $args[2]);
@@ -39,7 +41,7 @@ class Controller {
             
             if(empty($_SESSION['session_id']))
             {
-                $this->showLogin();
+                $this->showBlog();
             }
             
             else
@@ -409,8 +411,14 @@ class Controller {
         include "src/view/changePassword.php";
     }   
     
-    public function showBlog($author, $postId = "") {
-        $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $author . "/" . $postId));
+    public function showBlog($author = "", $postId = "") {
+        
+        if($author != "") {
+            $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" . $author . "/" . $postId));
+        } else {
+            $arr = json_decode(file_get_contents( API_URL . "api/v1/posts/" ));
+        }
+                               
         $arr = array_chunk($arr, 3, true);
         
         $pg = $_GET['page'];

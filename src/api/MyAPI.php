@@ -43,8 +43,8 @@ $id = "";
             if( empty($author) )
             {
                 return array(
-                    'data' => array("message" => "Method not allowed"),
-                    'status' => 405
+                    'data' => $this->PostModel->getAllPosts(),
+                    'status' => 200
                 );
             }
             else
