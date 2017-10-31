@@ -49,7 +49,7 @@
                     </form>
             </div>
             <div class="card-footer">
-              <button id="addComment" type="submit" class="btn btn-sm btn-primary float-right"><i class="fa fa-dot-circle-o"></i> Add comment</button>
+              <button id="addComment" onclick="ajaxAddComment()" type="submit" class="btn btn-sm btn-primary float-right"><i class="fa fa-dot-circle-o"></i> Add comment</button>
             </div>
           </div>
 

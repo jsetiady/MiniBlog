@@ -110,7 +110,7 @@
         });
     }
 
-    $("button#addComment").click(function(){
+    function ajaxAddComment() {
         
         var valid = true;
         //check whether form is empty
@@ -181,8 +181,6 @@
 
         }
         
-        
-        
-    });
+    };
 
 </script>
